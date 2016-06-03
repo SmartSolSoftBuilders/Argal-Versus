@@ -16,7 +16,7 @@
         <dependent-module archiveName="argal-seguridad-1.0.0-seguridad.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/argal-seguridad/argal-seguridad">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="java-output-path" value="/argal-web/target/classes"/>
+        <property name="java-output-path" value="/argal-versus/target/classes"/>
         <property name="context-root" value="argal-versus"/>
     </wb-module>
 </project-modules>

@@ -21,7 +21,7 @@ function uploadFormData(){
   	oMyForm.append("file", file2.files[0]);
  
   	$.ajax({
-    	url: 'http://localhost:8080/argal-web/mvc/cont/upload',
+    	url: 'http://localhost:8080/argal-versus/mvc/cont/upload',
     	data: oMyForm,
     	dataType: 'text',
     	processData: false,

@@ -11,7 +11,7 @@
   <artifactId>argal-versus</artifactId>
   <version>0.0.1-versus-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>argal-web</name>
+  <name>argal-versus</name>
   <url>http://maven.apache.org</url>
 	<properties>
 	  <jasperreports.version>4.7.1</jasperreports.version>	  
@@ -89,7 +89,7 @@
 	        <targetPath>.</targetPath>	        
 	    </resource>   	
   	</resources>
-    <finalName>argal-web</finalName>
+    <finalName>argal-versus</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -111,7 +111,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
                 <configuration>
-                    <warName>argal-web</warName>
+                    <warName>argal-versus</warName>
                     <webResources>                    
                     <resource>
                         <filtering>true</filtering>

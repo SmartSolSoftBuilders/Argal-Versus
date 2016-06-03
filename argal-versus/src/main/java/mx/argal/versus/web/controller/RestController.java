@@ -108,7 +108,7 @@ public @ResponseBody String upload(MultipartHttpServletRequest request, HttpServ
 	} catch(InterruptedException ex) {
 	    Thread.currentThread().interrupt();
 	}*/
-	//return "<img src='http://localhost:8080/argal-web/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
+	//return "<img src='http://localhost:8080/argal-versus/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
 	return "ok";
 }
 //PARA FACTURAS
@@ -173,7 +173,7 @@ public @ResponseBody String uploadFile(MultipartHttpServletRequest request, Http
 	} catch(InterruptedException ex) {
 	    Thread.currentThread().interrupt();
 	}*/
-	//return "<img src='http://localhost:8080/argal-web/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
+	//return "<img src='http://localhost:8080/argal-versus/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
 	return "ok";
 }
 
@@ -240,7 +240,7 @@ public @ResponseBody String uploadEvidencia(MultipartHttpServletRequest request,
 	    Thread.sleep(4000);                 //1000 milliseconds is one second.
 	} catch(InterruptedException ex) {
 	    Thread.currentThread().interrupt();
-	}	//return "<img src='http://localhost:8080/argal-web/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
+	}	//return "<img src='http://localhost:8080/argal-versus/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
 	return "ok";
 }
 
@@ -309,7 +309,7 @@ public @ResponseBody String uploadEvidenciaFile(MultipartHttpServletRequest requ
 	} catch(InterruptedException ex) {
 	    Thread.currentThread().interrupt();
 	}
-	//return "<img src='http://localhost:8080/argal-web/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
+	//return "<img src='http://localhost:8080/argal-versus/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
 	return ""+gasto.getIdGasto();
 }
 
@@ -341,7 +341,7 @@ public @ResponseBody String uploadGasto(MultipartHttpServletRequest request, Htt
 	catch (IOException e) {
 		e.printStackTrace();
 }
-return "<img src='http://localhost:8080/argal-web/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
+return "<img src='http://localhost:8080/argal-versus/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
 	//return null;
 }
 
@@ -391,7 +391,7 @@ return "<img src='http://localhost:8080/argal-web/mvc/cont/get/"+Calendar.getIns
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		//return "<img src='http://localhost:8080/argal-web/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
+		//return "<img src='http://localhost:8080/argal-versus/mvc/cont/get/"+Calendar.getInstance().getTimeInMillis()+"'/>";
 		return "ok";
 	}
 

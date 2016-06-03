@@ -17,7 +17,7 @@
               	              
     <mvc:annotation-driven />
     <!-- Indicamos el paquete base bajo el cual se encontrarán todos nuestros Controllers. -->
-	<context:component-scan base-package="mx.argal.web.controller"/>
+	<context:component-scan base-package="mx.argal.versus.web.controller"/>
 	
 	<!-- Evita conflictos de URL en caso de que se opte por usar el path raíz en la configuración del DispatcherServlet de Spring -->
 	<mvc:resources mapping="/static/**" location="/static/" />
