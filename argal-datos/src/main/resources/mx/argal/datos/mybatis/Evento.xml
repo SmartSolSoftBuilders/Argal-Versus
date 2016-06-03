@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mx.argal.dao.EventoDao">
+
+	<resultMap type="Evento" id="eventoResult">
+		<id property="idEvento" column="ID_EVENTO"/>
+		<result property="fechaIngreso" column="FECHA_INGRESO"/>
+		<result property="fechaEgreso" column="FECHA_EGRESO"/> 
+		<result property="fechaCaptura" column="FECHA_CAPTURA"/>
+		<result property="numHabitacion" column="NUM_HABITACION"/>			
+		<!-- result property="red" column="RED"/> -->
+		<result property="eventosNoDeseablesEntornoHosp" column="EVENTOS_NO_DESEAB_ENT_HOSP"/>		
+		<result property="statusEvento" column="STATUS_EVENTO"/>
+		<result property="folioArgal" column="FOLIO_ARGAL"/>
+		<result property="folioHospital" column="FOLIO_HOSP"/>
+		<result property="horaIngreso" column="HORA_INGRESO"/>
+		<result property="horaEgreso" column="HORA_EGRESO"/>	
+		<result property="horaEgresoCapt" column="HORA_EGRESO_CAPT"/>				
+		<result property="medicoDictaminador" column="MEDICO_DICTAMINADOR"/>
+				
+		<!-- EGRESO -->
+		<result property="motivoEgreso" column="MOTIVO_EGRESO"/>
+		<result property="diasIncapacidad" column="DIAS_INCAPACIDAD"/>
+		<result property="fechaDef" column="FECHA_DEF" />
+    	<result property="horaDef" column="HORA_DEF" />
+    	<result property="causaDirectaDef" column="CAUSA_DIRECTA_DEF" />		
+		<result property="diasIncapacidad" column="DIAS_INCAPACIDAD"/>
+		<result property="fechaEgresoCapt" column="FECHA_EGRESO_CAPT"/>
+	
+		<!-- FINALIZAR EVENTO -->				
+		<result property="montoAntesDesvios" column="MONTO_ANTES_DESVIOS"/>
+		<!-- GASTOS OBSERVADOS -->
+		<result property="totalDesvios" column="TOTAL_DESVIOS"/>
+		<result property="montoDespuesDesvios" column="MONTO_DESPUES_DESVIOS"/>
+	
+		<result property="totalDesviosComprobados" column="TOTAL_DESVIOS_COMPROBADOS"/>		
+		<result property="ivaFinalizarEvento" column="IVA_FINALIZAR_EVENTO"/>
+		<result property="coaseguroFinalizarEvento" column="COASEGURO_FINALIZAR_EVENTO"/>
+		<result property="deducibleFinalizarEvento" column="DEDUCIBLE_FINALIZAR_EVENTO"/>
+		<result property="descuentoHospFinalizarEvento" column="DESCUENTO_HOSP_FINALIZAR_EVENTO"/>		
+		<result property="numFacturasAprobadas" column="NUM_FACTURAS_APROBADAS"/>
+		<result property="numFacturasRechazadas" column="NUM_FACTURAS_RECHAZADAS"/>
+		<result property="montoDesviosFacturacion" column="MONTO_DESVIOS_FACTURACION"/>
+		<result property="montoAjusteFacturacion" column="MONTO_AJUSTE_FACTURACION"/>
+		<result property="montoFacturacionCorregido" column="MONTO_FACTURACION_CORREGIDO"/>		
+		<result property="montoFinalFacturacion" column="MONTO_FINAL_FACTURACION"/>
+						
+		<association property="implant" column="ID_IMPLANT" javaType="Implant" select="selectImplant"/>
+		<association property="registroSeguroPersonal" column="ID_EVENTO" javaType="RegistroSeguroPersonal" select="selectRegistroSeguroPersonal"/>
+		<association property="registroGastosMayores" column="ID_EVENTO" javaType="RegistroGastosMayores" select="selectRegistroGastosMayores"/>				
+		<association property="hospital" column="ID_HOSP" javaType="Hospital" select="selectHospital"/>		
+		<association property="cliente" column="ID_CLIENTE" javaType="Cliente" select="selectCliente"/>
+		<association property="tipoSeguro" column="ID_TIPO_SEGURO" javaType="TipoSeguro" select="selectTipoSeguro"/>
+		<association property="tipoEvento" column="ID_TIPO_EVENTO" javaType="TipoEvento" select="selectTipoEvento" />
+		<!-- association property="registroSeguroPersonal" column="ID_REG_SEG_PERSONAL" javaType="RegistroSeguroPersonal" select="selectRegistroSeguroPersonal"/> -->				
+		<association property="diagnosticoIngreso1" column="ID_DIAGN_INGRESO_1" javaType="Icd" select="selectdiagnosticoIngreso1"/>
+		<association property="diagnosticoIngreso2" column="ID_DIAGN_INGRESO_2" javaType="Icd" select="selectDiagnosticoIngreso2"/>
+		<association property="diagnosticoEgreso1" column="ID_DIAGN_EGRESO_1" javaType="Icd" select="selectDiagnosticoEgreso1"/>
+		<association property="procedimiento1" column="ID_PROCEDIMIENTO_1" javaType="Cpt" select="selectprocedimiento1"/>
+		<association property="procedimiento2" column="ID_PROCEDIMIENTO_2" javaType="Cpt" select="selectprocedimiento2"/>
+		<collection property="antecedente" column="ID_EVENTO" javaType="Antecedente" select="selectAntecedente"/>				
+		<collection property="medicoTratante" column="ID_EVENTO" javaType="MedicoTratante" select="selectMedicoTratante"/>
+		<collection property="bitacoras" column="ID_EVENTO" javaType="List" select="selectBitacoras"/>				
+		<collection property="gastos" column="ID_EVENTO" javaType="List" select="selectGastos"/>
+		<collection property="facturas" column="ID_EVENTO" javaType="List" select="selectFacturas"/>				
+	</resultMap>
+	
+	<resultMap type="Evento" id="eventoResultLt">
+		<id property="idEvento" column="ID_EVENTO"/>
+		<result property="fechaIngreso" column="FECHA_INGRESO"/>
+		<result property="fechaEgreso" column="FECHA_EGRESO"/> 
+		<result property="fechaCaptura" column="FECHA_CAPTURA"/>
+		<result property="numHabitacion" column="NUM_HABITACION"/>			
+		<!-- result property="red" column="RED"/> -->
+		<result property="eventosNoDeseablesEntornoHosp" column="EVENTOS_NO_DESEAB_ENT_HOSP"/>		
+		<result property="statusEvento" column="STATUS_EVENTO"/>
+		<result property="folioArgal" column="FOLIO_ARGAL"/>
+		<result property="folioHospital" column="FOLIO_HOSP"/>
+		<result property="horaIngreso" column="HORA_INGRESO"/>
+		<result property="horaEgreso" column="HORA_EGRESO"/>	
+		<result property="horaEgresoCapt" column="HORA_EGRESO_CAPT"/>				
+		<result property="medicoDictaminador" column="MEDICO_DICTAMINADOR"/>
+				
+		<!-- EGRESO -->
+		<result property="motivoEgreso" column="MOTIVO_EGRESO"/>
+		<result property="diasIncapacidad" column="DIAS_INCAPACIDAD"/>
+		<result property="fechaDef" column="FECHA_DEF" />
+    	<result property="horaDef" column="HORA_DEF" />
+    	<result property="causaDirectaDef" column="CAUSA_DIRECTA_DEF" />		
+		<result property="diasIncapacidad" column="DIAS_INCAPACIDAD"/>
+		<result property="fechaEgresoCapt" column="FECHA_EGRESO_CAPT"/>
+	
+		<!-- FINALIZAR EVENTO -->				
+		<result property="montoAntesDesvios" column="MONTO_ANTES_DESVIOS"/>
+		<!-- GASTOS OBSERVADOS -->
+		<result property="totalDesvios" column="TOTAL_DESVIOS"/>
+		<result property="montoDespuesDesvios" column="MONTO_DESPUES_DESVIOS"/>
+	
+		<result property="totalDesviosComprobados" column="TOTAL_DESVIOS_COMPROBADOS"/>		
+		<result property="ivaFinalizarEvento" column="IVA_FINALIZAR_EVENTO"/>
+		<result property="coaseguroFinalizarEvento" column="COASEGURO_FINALIZAR_EVENTO"/>
+		<result property="deducibleFinalizarEvento" column="DEDUCIBLE_FINALIZAR_EVENTO"/>
+		<result property="descuentoHospFinalizarEvento" column="DESCUENTO_HOSP_FINALIZAR_EVENTO"/>		
+		<result property="numFacturasAprobadas" column="NUM_FACTURAS_APROBADAS"/>
+		<result property="numFacturasRechazadas" column="NUM_FACTURAS_RECHAZADAS"/>
+		<result property="montoDesviosFacturacion" column="MONTO_DESVIOS_FACTURACION"/>
+		<result property="montoAjusteFacturacion" column="MONTO_AJUSTE_FACTURACION"/>
+		<result property="montoFacturacionCorregido" column="MONTO_FACTURACION_CORREGIDO"/>		
+		<result property="montoFinalFacturacion" column="MONTO_FINAL_FACTURACION"/>
+						
+		<association property="implant" column="ID_IMPLANT" javaType="Implant" select="selectImplant"/>
+		<association property="registroSeguroPersonal" column="ID_EVENTO" javaType="RegistroSeguroPersonal" select="selectRegistroSeguroPersonal"/>
+		<association property="registroGastosMayores" column="ID_EVENTO" javaType="RegistroGastosMayores" select="selectRegistroGastosMayores"/>				
+		<association property="hospital" column="ID_HOSP" javaType="Hospital" select="selectHospital"/>		
+		<association property="cliente" column="ID_CLIENTE" javaType="Cliente" select="selectCliente"/>
+		<association property="tipoSeguro" column="ID_TIPO_SEGURO" javaType="TipoSeguro" select="selectTipoSeguro"/>
+		<association property="tipoEvento" column="ID_TIPO_EVENTO" javaType="TipoEvento" select="selectTipoEvento" />
+		<!-- association property="registroSeguroPersonal" column="ID_REG_SEG_PERSONAL" javaType="RegistroSeguroPersonal" select="selectRegistroSeguroPersonal"/> -->				
+		<association property="diagnosticoIngreso1" column="ID_DIAGN_INGRESO_1" javaType="Icd" select="selectdiagnosticoIngreso1"/>
+		<association property="diagnosticoIngreso2" column="ID_DIAGN_INGRESO_2" javaType="Icd" select="selectDiagnosticoIngreso2"/>
+		<association property="diagnosticoEgreso1" column="ID_DIAGN_EGRESO_1" javaType="Icd" select="selectDiagnosticoEgreso1"/>
+		<association property="procedimiento1" column="ID_PROCEDIMIENTO_1" javaType="Cpt" select="selectprocedimiento1"/>
+		<association property="procedimiento2" column="ID_PROCEDIMIENTO_2" javaType="Cpt" select="selectprocedimiento2"/>
+		<collection property="antecedente" column="ID_EVENTO" javaType="Antecedente" select="selectAntecedente"/>				
+		<collection property="medicoTratante" column="ID_EVENTO" javaType="MedicoTratante" select="selectMedicoTratante"/>
+		<collection property="bitacoras" column="ID_EVENTO" javaType="List" select="selectBitacoras"/>				
+		<!-- collection property="gastos" column="ID_EVENTO" javaType="List" select="selectGastos"/> -->
+		<!--  collection property="facturas" column="ID_EVENTO" javaType="List" select="selectFacturas"/>	 -->			
+	</resultMap>
+	
+	<resultMap type="Evento" id="eventoResultLtSF">
+		<id property="idEvento" column="ID_EVENTO"/>
+		<result property="fechaIngreso" column="FECHA_INGRESO"/>
+		<result property="fechaEgreso" column="FECHA_EGRESO"/> 
+		<result property="fechaCaptura" column="FECHA_CAPTURA"/>
+		<result property="numHabitacion" column="NUM_HABITACION"/>			
+		<!-- result property="red" column="RED"/> -->
+		<result property="eventosNoDeseablesEntornoHosp" column="EVENTOS_NO_DESEAB_ENT_HOSP"/>		
+		<result property="statusEvento" column="STATUS_EVENTO"/>
+		<result property="folioArgal" column="FOLIO_ARGAL"/>
+		<result property="folioHospital" column="FOLIO_HOSP"/>
+		<result property="horaIngreso" column="HORA_INGRESO"/>
+		<result property="horaEgreso" column="HORA_EGRESO"/>	
+		<result property="horaEgresoCapt" column="HORA_EGRESO_CAPT"/>				
+		<result property="medicoDictaminador" column="MEDICO_DICTAMINADOR"/>
+				
+		<!-- EGRESO -->
+		<result property="motivoEgreso" column="MOTIVO_EGRESO"/>
+		<result property="diasIncapacidad" column="DIAS_INCAPACIDAD"/>
+		<result property="fechaDef" column="FECHA_DEF" />
+    	<result property="horaDef" column="HORA_DEF" />
+    	<result property="causaDirectaDef" column="CAUSA_DIRECTA_DEF" />		
+		<result property="diasIncapacidad" column="DIAS_INCAPACIDAD"/>
+		<result property="fechaEgresoCapt" column="FECHA_EGRESO_CAPT"/>
+	
+		<!-- FINALIZAR EVENTO -->				
+		<result property="montoAntesDesvios" column="MONTO_ANTES_DESVIOS"/>
+		<!-- GASTOS OBSERVADOS -->
+		<result property="totalDesvios" column="TOTAL_DESVIOS"/>
+		<result property="montoDespuesDesvios" column="MONTO_DESPUES_DESVIOS"/>
+	
+		<result property="totalDesviosComprobados" column="TOTAL_DESVIOS_COMPROBADOS"/>		
+		<result property="ivaFinalizarEvento" column="IVA_FINALIZAR_EVENTO"/>
+		<result property="coaseguroFinalizarEvento" column="COASEGURO_FINALIZAR_EVENTO"/>
+		<result property="deducibleFinalizarEvento" column="DEDUCIBLE_FINALIZAR_EVENTO"/>
+		<result property="descuentoHospFinalizarEvento" column="DESCUENTO_HOSP_FINALIZAR_EVENTO"/>		
+		<result property="numFacturasAprobadas" column="NUM_FACTURAS_APROBADAS"/>
+		<result property="numFacturasRechazadas" column="NUM_FACTURAS_RECHAZADAS"/>
+		<result property="montoDesviosFacturacion" column="MONTO_DESVIOS_FACTURACION"/>
+		<result property="montoAjusteFacturacion" column="MONTO_AJUSTE_FACTURACION"/>
+		<result property="montoFacturacionCorregido" column="MONTO_FACTURACION_CORREGIDO"/>		
+		<result property="montoFinalFacturacion" column="MONTO_FINAL_FACTURACION"/>
+						
+		<association property="implant" column="ID_IMPLANT" javaType="Implant" select="selectImplant"/>
+		<association property="registroSeguroPersonal" column="ID_EVENTO" javaType="RegistroSeguroPersonal" select="selectRegistroSeguroPersonal"/>
+		<association property="registroGastosMayores" column="ID_EVENTO" javaType="RegistroGastosMayores" select="selectRegistroGastosMayores"/>				
+		<association property="hospital" column="ID_HOSP" javaType="Hospital" select="selectHospital"/>		
+		<association property="cliente" column="ID_CLIENTE" javaType="Cliente" select="selectCliente"/>
+		<association property="tipoSeguro" column="ID_TIPO_SEGURO" javaType="TipoSeguro" select="selectTipoSeguro"/>
+		<association property="tipoEvento" column="ID_TIPO_EVENTO" javaType="TipoEvento" select="selectTipoEvento" />
+		<!-- association property="registroSeguroPersonal" column="ID_REG_SEG_PERSONAL" javaType="RegistroSeguroPersonal" select="selectRegistroSeguroPersonal"/> -->				
+		<association property="diagnosticoIngreso1" column="ID_DIAGN_INGRESO_1" javaType="Icd" select="selectdiagnosticoIngreso1"/>
+		<association property="diagnosticoIngreso2" column="ID_DIAGN_INGRESO_2" javaType="Icd" select="selectDiagnosticoIngreso2"/>
+		<association property="diagnosticoEgreso1" column="ID_DIAGN_EGRESO_1" javaType="Icd" select="selectDiagnosticoEgreso1"/>
+		<association property="procedimiento1" column="ID_PROCEDIMIENTO_1" javaType="Cpt" select="selectprocedimiento1"/>
+		<association property="procedimiento2" column="ID_PROCEDIMIENTO_2" javaType="Cpt" select="selectprocedimiento2"/>
+		<collection property="antecedente" column="ID_EVENTO" javaType="Antecedente" select="selectAntecedente"/>				
+		<collection property="medicoTratante" column="ID_EVENTO" javaType="MedicoTratante" select="selectMedicoTratante"/>
+		<collection property="bitacoras" column="ID_EVENTO" javaType="List" select="selectBitacoras"/>				
+		<collection property="gastos" column="ID_EVENTO" javaType="List" select="selectGastosLtSF"/> 
+		<collection property="facturas" column="ID_EVENTO" javaType="List" select="selectFacturas"/>			
+	</resultMap>
+					 
+	<resultMap id="implantResult" type="Implant">
+    	<id property="idImplant" column="ID_IMPLANT" />
+    	<id property="nickImplant" column="NICK_IMPLANT" />
+    	<result property="nombreImplant" column="NOMBRE_IMPLANT" />
+    	<result property="appImplant" column="APP_IMPLANT" />
+	</resultMap>
+	
+	<resultMap id="registroSeguroPersonalResult" type="RegistroSeguroPersonal">
+    	<id property="idRegistroSeguroPersonal" column="ID_REG_SEG_PERSONAL" />
+    	<id property="idEvento" column="ID_EVENTO" />
+		<result property="numeroNomina" column="NUM_NOMINA" />
+		<result property="institucion" column="INSTITUCION" />
+		<result property="nombreTitular" column="NOMBRE_TITULAR" />
+		<result property="appTitular" column="APP_TITULAR" />
+		<result property="apmTitular" column="APM_TITULAR" />
+		<result property="nombrePaciente" column="NOMBRE_PACIENTE" />
+		<result property="appPaciente" column="APP_PACIENTE" />
+		<result property="apmPaciente" column="APM_PACIENTE" />
+		<result property="edadPaciente" column="EDAD_PACIENTE" />		
+		<result property="unidadEdadPaciente" column="UNIDAD_EDAD" />
+		<result property="sexoPaciente" column="SEXO_PACIENTE" />
+		<result property="relacionPaciente" column="RELACION_PACIENTE" />
+		<result property="numAutorizacion" column="NUM_AUTORIZACION" />
+		
+		<result property="nacimientoFechaNacimiento" column="NAC_FECHA_NACIMIENTO" />
+		<result property="nacimientoHoraNacimiento" column="NAC_HORA_NACIMIENTO" />
+		<result property="nacimientoTipoParto" column="NAC_TIPO_PARTO" />
+		<result property="nacimientoTalla" column="NAC_TALLA" />
+		<result property="nacimientoPeso" column="NAC_PESO" />
+		<result property="nacimientoApgar" column="NAC_APGAR" />
+		<result property="nacimientoMedicoTratante" column="NAC_MEDICO_TRATANTE" />
+		<result property="nacimientoMedicoTratante" column="NAC_MEDICO_TRATANTE" />
+		<result property="condicionPaciente" column="CONDICION_PACIENTE"/>
+		<result property="censo" column="CENSO"/>
+		<result property="capita" column="CAPITA"/>
+		<result property="cantidadCubiertaConvenio" column="CANTIDAD_CUB_CONVENIO"/>
+	</resultMap>
+	
+	<resultMap id="gastoRegistroSeguroPersonalResult" type="GastoRegistroSeguroPersonal">
+		<id property="idGastoRegistroSeguroPersonal" column="ID_GASTO_REG_SEG_PERSONAL" />
+		<result property="idTipoCargo" column="ID_TIPO_CARGO" />
+		<result property="idArea" column="ID_AREA" />
+		<result property="idRubro" column="ID_RUBRO" />
+		<result property="idRazon" column="ID_RAZON" />
+		<result property="fechaIngreso" column="FECHA_INGRESO" />
+		<result property="nombre" column="NOMBRE" />
+		<result property="montoUnitario" column="MONTO_UNITARIO" />
+		<result property="cantidad" column="CANTIDAD" />
+		<result property="rutaEvidencia" column="TIPO_EVIDENCIA" />
+		<!-- result property="nacimientoSilverman" column="NAC_SILVERMAN" / -->
+		
+	</resultMap>
+	
+	<resultMap id="diagnosticoIngreso1Result" type="Icd">
+    	<id property="idIcd" column="ID_ICD" />
+    	<result property="descripcion" column="DESCRIPCION" />    	
+    	<result property="clave" column="CVE_ICD" />    	
+	</resultMap>
+	
+	<resultMap id="bitacoraResult" type="Bitacora">
+    	<id property="idBitacora" column="ID_BITACORA_MEDICA" />
+    	<result property="idRegistroMedico" column="ID_REGISTRO" />
+    	<result property="interconsulta" column="INTERCONSULTA" />
+    	<result property="observaciones" column="OBSERVACIONES" />    	
+    	<result property="fechaBitacora" column="FECHA_BITACORA" />
+    	<result property="descripcion" column="DESCRIPCION_BITACORA" />
+	</resultMap>
+	
+	<resultMap id="gastoResult" type="GASTO">
+    	<id property="idGasto" column="ID_GASTO_EVENTO" />
+		<result property="idTipoCargo" column="ID_TIPO_CARGO" />
+		<result property="idArea" column="ID_AREA" />
+		<result property="idRubro" column="ID_RUBRO" />
+		<result property="idRazon" column="ID_RAZON" />
+		<result property="fechaIngreso" column="FECHA_INGRESO" />
+		<result property="nombre" column="NOMBRE" />
+		<result property="montoUnitario" column="MONTO_UNITARIO" />
+		<result property="cantidad" column="CANTIDAD" />
+		<result property="rutaEvidencia" column="TIPO_EVIDENCIA" />
+		<result property="archivo" column="ARCHIVO" javaType = "byte[]" jdbcType = "BINARY" typeHandler = "org.apache.ibatis.type.ByteArrayTypeHandler" />		    		    
+	</resultMap>
+	
+	<resultMap id="gastoResultLtSF" type="GASTO">
+    	<id property="idGasto" column="ID_GASTO_EVENTO" />
+		<result property="idTipoCargo" column="ID_TIPO_CARGO" />
+		<result property="idArea" column="ID_AREA" />
+		<result property="idRubro" column="ID_RUBRO" />
+		<result property="idRazon" column="ID_RAZON" />
+		<result property="fechaIngreso" column="FECHA_INGRESO" />
+		<result property="nombre" column="NOMBRE" />
+		<result property="montoUnitario" column="MONTO_UNITARIO" />
+		<result property="cantidad" column="CANTIDAD" />		    		    
+	</resultMap>	
+	
+	<resultMap id="facturaResult" type="FACTURA">
+    	<id property="idFactura" column="ID_FACTURA" />
+		<result property="numeroFactura" column="NUM_FACTURA" />
+		<result property="aprobada" column="APROBADA" />
+		<result property="detalle" column="DETALLE" />
+		<result property="observaciones" column="OBSERVACIONES" />
+		<result property="rutaFactura" column="RUTA_FACTURA" />		
+		<result property="monto" column="MONTO" />		    
+		<result property="ajusteFactura" column="AJUSTE_FACTURA" />
+		<result property="tipoComprobanteFiscalCorregido" column="TIPO_CFC" />
+		<result property="montoComprobanteFiscalCorregido" column="MONTO_CFC" />
+		<result property="folioComprobanteFiscalCorregido" column="FOLIO_CFC" />
+		<result property="archivo" column="ARCHIVO" javaType = "byte[]" jdbcType = "BINARY" typeHandler = "org.apache.ibatis.type.ByteArrayTypeHandler" />
+	</resultMap>
+	
+	<resultMap id="diagnosticoIngreso2Result" type="Icd">
+    	<id property="idIcd" column="ID_ICD" />
+    	<result property="descripcion" column="DESCRIPCION" />    	
+    	<result property="clave" column="CVE_ICD" />    	
+	</resultMap>
+		
+	<resultMap id="registroGastosMayoresResult" type="RegistroGastosMayores">
+    	<id property="idRegistroGastosMayores" column="ID_REG_GASTOS_MAYORES" />
+    	<!--result property="descripcion" column="DESCRIPCION" /-->
+    	<result property="numeroPoliza" column="NO_POLIZA"/>
+		<result property="sumaAsegurada" column="SUMA_ASEGURADA"/>
+		<result property="montoCartaAutInicial" column="MONTO_CARTA_AUT_INI"/>
+		<result property="tablaHonorariosMedicos" column="TAB_HONOR_MEDIC"/>
+		<result property="coaseguroMedico" column="COASEGURO_MED"/>
+		<result property="deduciblePoliza" column="DEDUCIBLE_POLIZA"/>	
+		<result property="nombreTitular" column="NOMBRE_TITULAR"/>
+		<result property="appTitular" column="APP_TITULAR"/>
+		<result property="apmTitular" column="APM_TITULAR"/>
+		<result property="nombrePaciente" column="NOMBRE_PACIENTE"/>
+		<result property="appPaciente" column="APP_PACIENTE"/>
+		<result property="apmPaciente" column="APM_PACIENTE"/>
+		<result property="edadPaciente" column="EDAD_PACIENTE"/>
+		<result property="unidadEdadPaciente" column="UNIDAD_EDAD"/>
+		<result property="sexoPaciente" column="SEXO_PACIENTE"/>
+		<result property="condicionPaciente" column="CONDICION_PACIENTE"/>
+		<result property="relacionPaciente" column="RELACION_PACIENTE"/>
+		
+		<result property="nacimientoFechaNacimiento" column="NAC_FECHA_NACIMIENTO" />
+		<result property="nacimientoHoraNacimiento" column="NAC_HORA_NACIMIENTO" />
+		<result property="nacimientoTipoParto" column="NAC_TIPO_PARTO" />
+		<result property="nacimientoTalla" column="NAC_TALLA" />
+		<result property="nacimientoPeso" column="NAC_PESO" />
+		<result property="nacimientoApgar" column="NAC_APGAR" />
+		<!--  result property="nacimientoSilverman" column="NAC_SILVERMAN" /-->
+		<result property="nacimientoMedicoTratante" column="NAC_MEDICO_TRATANTE" />
+						
+	</resultMap>
+	
+	<resultMap id="hospitalResult" type="Hospital">
+    	<id property="idHospital" column="ID_HOSP" />
+    	<result property="nombreHospital" column="NOMBRE_HOSP" />
+    	<result property="direccionHospital" column="DIR_HOSP"/>
+		<result property="coloniaHospital" column="COL_HOSP"/>
+		<result property="municipioDelHospital" column="MUN_DEL_HOSP"/>
+		<result property="estadoHospital" column="ESTADO_HOSP"/>		
+		<result property="cpHospital" column="CP_HOSP"/>
+		<result property="conmutadorHospital" column="CONMUTADOR_HOSP"/>		
+		<result property="telModuloHospital" column="TEL_DIR_MOD_HOSP"/>
+		<result property="ciudadHospital" column="CIUDAD_HOSP"/>
+		<result property="paisHospital" column="PAIS_HOSP"/>
+		<result property="activoHospital" column="ACTIVO_HOSP"/>    	
+	</resultMap>
+		
+	<resultMap id="icdResult" type="Icd">
+    	<id property="idIcd" column="ID_ICD" />
+    	<result property="descripcion" column="DESCRIPCION" />    	
+		<result property="clave" column="CVE_ICD" />    		
+	</resultMap>
+	
+	<resultMap id="antecedenteResult" type="Antecedente">
+    	<id property="idAntecedente" column="ID_ANTECEDENTE" />
+    	<result property="descripcion" column="DESCRIPCION" />    	
+	</resultMap>
+	
+	<resultMap id="medicoTratanteResult" type="MedicoTratante">
+    	<id property="idMedicoTratante" column="ID_MEDICO_TRATANTE" />
+    	<result property="nombre" column="NOMBRE" /> 
+    	<result property="tipo" column="TIPO_MED" /> 	
+    	<collection property="especialidades" column="ID_MEDICO_TRATANTE" javaType="List" select="selectEspecialidadMedicoTratante"/>    	
+	</resultMap>
+	
+	<resultMap id="especialidadMedicoTratanteResult" type="Especialidad">
+    	<id property="idEspecialidad" column="ID_ESPECIALIDAD" />
+    	<result property="descripcion" column="DESCRIPCION" />     	    
+	</resultMap>	
+	
+	<resultMap id="medTratResult" type="MedicoTratante">
+    	<id property="idMedicoTratante" column="ID_MEDICO_TRATANTE" />
+    	<result property="nombre" column="NOMBRE" />  
+    	<result property="tipo" column="TIPO_MED" />   
+		<collection property="especialidades" column="ID_MEDICO_TRATANTE" javaType="List" select="selectEspecialidadMedicoTratante"/>    		
+	</resultMap>
+	
+	<resultMap id="cptResult" type="Cpt">
+    	<id property="idCpt" column="ID_CPT" />
+    	<result property="descripcion" column="DESCRIPCION" />
+    	<result property="cveCpt" column="CVE_CPT" /> 	    	
+	</resultMap>
+	
+	<select id="selectprocedimiento1" parameterType="int" resultMap="cptResult" resultType="Cpt">
+		select * from "CPT" where "ID_CPT"=#{procedimiento1.idCpt} 	
+	</select>
+	<select id="selectprocedimiento2" parameterType="int" resultMap="cptResult" resultType="Cpt">
+		select * from "CPT" where "ID_CPT"=#{procedimiento2.idCpt} 	
+	</select>	
+	<select id="selectdiagnosticoIngreso1" parameterType="int" resultMap="diagnosticoIngreso1Result" resultType="Icd">		 
+		select * from "ICD" where "ID_ICD"=#{diagnosticoIngreso1.idIcd} 	
+	</select>
+	<select id="selectDiagnosticoEgreso1" parameterType="int" resultMap="diagnosticoIngreso1Result" resultType="Icd">		 
+		select * from "ICD" where "ID_ICD"=#{diagnosticoEgreso1.idIcd} 	
+	</select>
+	<select id="selectBitacoras" parameterType="int" resultMap="bitacoraResult" resultType="Bitacora">		 
+		select * from "BITACORA_MEDICA" where "ID_EVENTO"=#{idEvento} ORDER BY "FECHA_BITACORA" DESC 	
+	</select>	
+	<select id="selectAntecedente" parameterType="int" resultMap="antecedenteResult" resultType="Antecedente">		 
+		select * from "ANTECEDENTES" where "ID_ANTECEDENTE"=(SELECT "ID_ANTECEDENTES" FROM "EVENTO" WHERE "ID_EVENTO"=#{idEvento}) 	
+	</select>
+	<select id="selectMedicoTratante" parameterType="int" resultMap="medicoTratanteResult" resultType="MedicoTratante">		 
+		select * from "MEDICO_TRATANTE" where "ID_MEDICO_TRATANTE"=(SELECT "ID_MEDICO_TRATANTE" FROM "EVENTO" WHERE "ID_EVENTO"=#{idEvento}) 	
+	</select>
+	<select id="selectEspecialidadMedicoTratante" parameterType="int" resultMap="especialidadMedicoTratanteResult" resultType="Especialidad">		 
+		select "ESPECIALIDAD"."ID_ESPECIALIDAD", "ESPECIALIDAD"."DESCRIPCION" from "ESPECIALIDAD_MEDICO_TRATANTE" INNER JOIN "ESPECIALIDAD" ON "ESPECIALIDAD_MEDICO_TRATANTE"."ID_ESPECIALIDAD"="ESPECIALIDAD"."ID_ESPECIALIDAD"
+			 AND "ESPECIALIDAD_MEDICO_TRATANTE"."ID_MEDICO_TRATANTE"=#{idMedicoTratante}; 	
+	</select>
+	<select id="selectGastos" parameterType="int" resultMap="gastoResult" resultType="Gasto">		 
+		select * from "GASTO_EVENTO" where "ID_EVENTO"=#{idEvento} ORDER BY "ID_GASTO_EVENTO" ASC  	
+	</select>
+	<select id="selectGastosLtSF" parameterType="int" resultMap="gastoResultLtSF" resultType="Gasto">		 
+		SELECT "ID_GASTO_EVENTO", "ID_EVENTO", "ID_TIPO_CARGO", "ID_AREA", "ID_RUBRO", 
+  		     "ID_RAZON", "FECHA_INGRESO", "NOMBRE", "MONTO_UNITARIO", "CANTIDAD"       
+  			FROM "GASTO_EVENTO" where "ID_EVENTO"=#{idEvento};  	
+	</select>
+	<select id="obtenerGastoById" parameterType="int" resultMap="gastoResult" resultType="Gasto">		 
+		select * from "GASTO_EVENTO" where "ID_GASTO_EVENTO"=#{id}  	
+	</select>
+	
+	<select id="selectFacturas" parameterType="int" resultMap="facturaResult" resultType="Factura">		 
+		select * from "FACTURA" where "ID_EVENTO"=#{idEvento} ORDER BY "ID_FACTURA" ASC 	
+	</select>
+	<select id="selectDiagnosticoIngreso2" parameterType="int" resultMap="diagnosticoIngreso1Result" resultType="Icd">		 
+		select * from "ICD" where "ID_ICD"=#{diagnosticoIngreso2.idIcd} 	
+	</select>
+	
+	<select id="obtenerEvento" resultMap="eventoResult" parameterType="Evento">
+		select * from "EVENTO" where "ID_EVENTO"=#{idEvento};
+	</select>
+	<select id="obtenerAntecedentes" resultMap="antecedenteResult">
+		select * from "ANTECEDENTES";
+	</select>
+	<select id="obtenerEventos" resultMap="eventoResult">
+		select * from "EVENTO" order by "ID_EVENTO" desc;
+	</select>
+	
+	<select id="obtenerEventosLtByParam" resultMap="eventoResultLt" parameterType="map">
+	    SELECT "ID_EVENTO", "ID_IMPLANT", "ID_HOSP", "FECHA_INGRESO", "FECHA_CAPTURA", 
+       "ID_CLIENTE", "ID_TIPO_SEGURO", "ID_TIPO_EVENTO", "ID_DIAGN_INGRESO_1", 
+       "ID_ANTECEDENTES", "ID_PROCEDIMIENTO", "ID_TIPO_TRATAMIENTO_QUIRURGICO", 
+       "NUM_HABITACION", "ID_MEDICO_TRATANTE", "ID_DIAGN_INGRESO_2", 
+       "FECHA_EGRESO", "ID_DIAGN_EGRESO_1", "ID_PROCEDIMIENTO_1", "ID_PROCEDIMIENTO_2", 
+       "EVENTOS_NO_DESEAB_ENT_HOSP", "MOTIVO_EGRESO", "MONTO_ANTES_DESVIOS2", 
+       "MONTO_DESPUES_DESVIOS", "DESC_HOSPITAL", "DIF_FACT_MENOS_DESVIOS", 
+       "DESCUENTO_NO_APLICADO", "CARGOS_PERSONALES", "TOTAL_DESVIOS", 
+       "AJUSTE_FACTURA", "TIPO_COMPROBANTE_FISCAL_COR", "FOLIO_COMPROB_FISCAL_COR", 
+       "STATUS_EVENTO", "COMENTARIOS_DIF_FACTURACION", "FOLIO_ARGAL", 
+       "FOLIO_HOSP", "IVA_FINALIZAR_EVENTO", "COASEGURO_FINALIZAR_EVENTO", 
+       "DEDUCIBLE_FINALIZAR_EVENTO", "DESCUENTO_HOSP_FINALIZAR_EVENTO", 
+       "HORA_INGRESO", "MEDICO_DICTAMINADOR", "FECHA_DEF", "HORA_DEF", 
+       "CAUSA_DIRECTA_DEF", "DIAS_INCAPACIDAD", "HORA_EGRESO", "HORA_EGRESO_CAPT", 
+       "FECHA_EGRESO_CAPT", "TOTAL_DESVIOS_COMPROBADOS", "NUM_FACTURAS_APROBADAS", 
+       "NUM_FACTURAS_RECHAZADAS", "MONTO_DESVIOS_FACTURACION", "MONTO_AJUSTE_FACTURACION", 
+       "MONTO_FACTURACION_CORREGIDO", "MONTO_FINAL_FACTURACION", "MONTO_ANTES_DESVIOS" from "EVENTO" 
+		<if test="fecha1 != null">       
+       		where "FECHA_CAPTURA" &lt;= date(#{fecha1}) AND "FECHA_CAPTURA" >= date(#{fecha2})
+       	</if>
+       		ORDER BY "ID_EVENTO" DESC;
+	</select>	
+	
+	<select id="obtenerEventosLt" resultMap="eventoResultLt">
+	    SELECT "ID_EVENTO", "ID_IMPLANT", "ID_HOSP", "FECHA_INGRESO", "FECHA_CAPTURA", 
+       "ID_CLIENTE", "ID_TIPO_SEGURO", "ID_TIPO_EVENTO", "ID_DIAGN_INGRESO_1", 
+       "ID_ANTECEDENTES", "ID_PROCEDIMIENTO", "ID_TIPO_TRATAMIENTO_QUIRURGICO", 
+       "NUM_HABITACION", "ID_MEDICO_TRATANTE", "ID_DIAGN_INGRESO_2", 
+       "FECHA_EGRESO", "ID_DIAGN_EGRESO_1", "ID_PROCEDIMIENTO_1", "ID_PROCEDIMIENTO_2", 
+       "EVENTOS_NO_DESEAB_ENT_HOSP", "MOTIVO_EGRESO", "MONTO_ANTES_DESVIOS2", 
+       "MONTO_DESPUES_DESVIOS", "DESC_HOSPITAL", "DIF_FACT_MENOS_DESVIOS", 
+       "DESCUENTO_NO_APLICADO", "CARGOS_PERSONALES", "TOTAL_DESVIOS", 
+       "AJUSTE_FACTURA", "TIPO_COMPROBANTE_FISCAL_COR", "FOLIO_COMPROB_FISCAL_COR", 
+       "STATUS_EVENTO", "COMENTARIOS_DIF_FACTURACION", "FOLIO_ARGAL", 
+       "FOLIO_HOSP", "IVA_FINALIZAR_EVENTO", "COASEGURO_FINALIZAR_EVENTO", 
+       "DEDUCIBLE_FINALIZAR_EVENTO", "DESCUENTO_HOSP_FINALIZAR_EVENTO", 
+       "HORA_INGRESO", "MEDICO_DICTAMINADOR", "FECHA_DEF", "HORA_DEF", 
+       "CAUSA_DIRECTA_DEF", "DIAS_INCAPACIDAD", "HORA_EGRESO", "HORA_EGRESO_CAPT", 
+       "FECHA_EGRESO_CAPT", "TOTAL_DESVIOS_COMPROBADOS", "NUM_FACTURAS_APROBADAS", 
+       "NUM_FACTURAS_RECHAZADAS", "MONTO_DESVIOS_FACTURACION", "MONTO_AJUSTE_FACTURACION", 
+       "MONTO_FACTURACION_CORREGIDO", "MONTO_FINAL_FACTURACION", "MONTO_ANTES_DESVIOS" from "EVENTO";
+	</select>		
+	
+	<select id="tieneEdosCta" resultType="int" parameterType="int">
+		select count("ID_EVENTO") from "GASTO_EVENTO" where "ID_EVENTO"=#{idEvent} and "ID_AREA"=#{tipo};
+	</select>
+	
+	<select id="obtenerEventosByCliente" resultMap="eventoResultLt" parameterType="Cliente">
+		select * from "EVENTO" where "ID_CLIENTE"=#{idCliente};
+	</select>
+	
+	<select id="obtenerEventoById" resultMap="eventoResult" parameterType="int">
+		select * from "EVENTO" where "ID_EVENTO"=#{id};
+	</select>
+	
+	<select id="obtenerBitacoraById" resultMap="bitacoraResult" parameterType="int">
+		select * from "BITACORA_MEDICA" where "ID_BITACORA_MEDICA"=#{id};
+	</select>	
+	
+	<select id="obtenerEventosByNumNomina" resultMap="eventoResultLt" parameterType="map">
+		SELECT * FROM "EVENTO" "E" INNER JOIN "REG_SEG_PERSONAL" ON "E"."ID_EVENTO"="REG_SEG_PERSONAL"."ID_EVENTO" WHERE "NUM_NOMINA"=#{pNomina}
+	</select>
+	
+	<select id="obtenerEventosByNumNominaAxa" resultMap="eventoResultLt" parameterType="map">
+		SELECT * FROM "EVENTO" "E" INNER JOIN "REG_SEG_PERSONAL" ON "E"."ID_EVENTO"="REG_SEG_PERSONAL"."ID_EVENTO" WHERE replace("NUM_NOMINA",'-','')=#{pNomina}
+	</select>
+	
+	
+	<select id="obtenerBitacorasByIdEvento" parameterType="map" resultMap="bitacoraResult" resultType="Bitacora">		 
+		select * from "BITACORA_MEDICA" where "ID_EVENTO"=#{idEvento} ORDER BY "FECHA_BITACORA" DESC 	
+	</select>
+	
+	<select id="obtenerEventosByImplant" resultMap="eventoResultLt" parameterType="Implant">
+		SELECT "E"."ID_EVENTO", "E"."ID_IMPLANT", "E"."ID_HOSP", "E"."FECHA_INGRESO", "E"."FECHA_CAPTURA", 
+	    "E"."ID_CLIENTE", "E"."ID_TIPO_SEGURO", "E"."ID_TIPO_EVENTO", "E"."ID_DIAGN_INGRESO_1", 
+       	"E"."ID_ANTECEDENTES", "E"."ID_PROCEDIMIENTO_1", "E"."ID_TIPO_TRATAMIENTO_QUIRURGICO", 
+        "E"."NUM_HABITACION",  "E"."ID_MEDICO_TRATANTE", "E"."ID_DIAGN_INGRESO_2","E"."STATUS_EVENTO",
+        "E"."DIAS_INCAPACIDAD","E"."MOTIVO_EGRESO","E"."HORA_EGRESO","E"."EVENTOS_NO_DESEAB_ENT_HOSP",
+        "E"."IVA_FINALIZAR_EVENTO","E"."COASEGURO_FINALIZAR_EVENTO","E"."DEDUCIBLE_FINALIZAR_EVENTO","E"."DESCUENTO_HOSP_FINALIZAR_EVENTO", "E"."FOLIO_ARGAL", "E"."FOLIO_HOSP","E"."HORA_INGRESO" 
+  		FROM "EVENTO" "E" INNER JOIN (SELECT "H"."ID_HOSP" FROM "HOSPITAL" "H" INNER JOIN "IMPLANT_HOSP" "IH" ON "H"."ID_HOSP"="IH"."ID_HOSP" AND "IH"."ID_IMPLANT"=#{idImplant}) AS "RS"
+  		ON "E"."ID_HOSP"="RS"."ID_HOSP" AND "E"."STATUS_EVENTO"&lt;3
+	</select>	
+	<select id="obtenerEventosBancoLayoutDiarioByParams" resultMap="eventoResultLtSF">
+		SELECT "E"."ID_EVENTO", "E"."ID_IMPLANT", "E"."ID_HOSP", "E"."FECHA_INGRESO", "E"."FECHA_CAPTURA","E"."FECHA_EGRESO",
+	       "E"."ID_CLIENTE", "E"."ID_TIPO_SEGURO", "E"."ID_TIPO_EVENTO", "E"."ID_DIAGN_INGRESO_1", 
+       	"E"."ID_ANTECEDENTES", "E"."ID_PROCEDIMIENTO", "E"."ID_TIPO_TRATAMIENTO_QUIRURGICO", 
+       "E"."NUM_HABITACION", "E"."ID_MEDICO_TRATANTE", "E"."ID_DIAGN_INGRESO_2","E"."DIAS_INCAPACIDAD","E"."ID_DIAGN_EGRESO_1","E"."ID_PROCEDIMIENTO_1","E"."ID_PROCEDIMIENTO_2","E"."TOTAL_DESVIOS_COMPROBADOS","E"."MONTO_FINAL_FACTURACION","E"."MONTO_ANTES_DESVIOS",
+       "E"."IVA_FINALIZAR_EVENTO","E"."COASEGURO_FINALIZAR_EVENTO","E"."DEDUCIBLE_FINALIZAR_EVENTO","E"."DESCUENTO_HOSP_FINALIZAR_EVENTO", "E"."FOLIO_ARGAL", "E"."FOLIO_HOSP","E"."HORA_INGRESO","E"."FECHA_EGRESO_CAPT"
+  		FROM "EVENTO" "E" INNER JOIN "REG_SEG_PERSONAL" "RS" ON "E"."ID_EVENTO"="RS"."ID_EVENTO"   		
+	  		WHERE "E"."STATUS_EVENTO" = 1 	  		  	
+	  		OR ( "E"."STATUS_EVENTO" = 2 AND ("E"."FECHA_EGRESO" + "E"."HORA_EGRESO") >= (select DATE 'yesterday' + interval '15h') AND ("E"."FECHA_EGRESO" + "E"."HORA_EGRESO")&lt; (select DATE 'today' + interval '15h'))  
+	</select>	
+	<select id="obtenerEventosBancoLayoutMensualByParams" resultMap="eventoResultLtSF">
+		SELECT "E"."ID_EVENTO", "E"."ID_IMPLANT", "E"."ID_HOSP", "E"."FECHA_INGRESO", "E"."FECHA_CAPTURA","E"."FECHA_EGRESO",
+	       "E"."ID_CLIENTE", "E"."ID_TIPO_SEGURO", "E"."ID_TIPO_EVENTO", "E"."ID_DIAGN_INGRESO_1", 
+       	"E"."ID_ANTECEDENTES", "E"."ID_PROCEDIMIENTO", "E"."ID_TIPO_TRATAMIENTO_QUIRURGICO", 
+       "E"."NUM_HABITACION", "E"."ID_MEDICO_TRATANTE", "E"."ID_DIAGN_INGRESO_2","E"."DIAS_INCAPACIDAD","E"."ID_DIAGN_EGRESO_1","E"."ID_PROCEDIMIENTO_1","E"."ID_PROCEDIMIENTO_2","E"."TOTAL_DESVIOS_COMPROBADOS","E"."MONTO_FINAL_FACTURACION","E"."MONTO_ANTES_DESVIOS",
+       "E"."IVA_FINALIZAR_EVENTO","E"."COASEGURO_FINALIZAR_EVENTO","E"."DEDUCIBLE_FINALIZAR_EVENTO","E"."DESCUENTO_HOSP_FINALIZAR_EVENTO", "E"."FOLIO_ARGAL", "E"."FOLIO_HOSP","E"."HORA_INGRESO","E"."FECHA_EGRESO_CAPT"
+  		FROM "EVENTO" "E" INNER JOIN "REG_SEG_PERSONAL" "RS" ON "E"."ID_EVENTO"="RS"."ID_EVENTO"   			  	  		
+	  		WHERE "E"."FECHA_EGRESO" >= #{fechaIngreso} AND "E"."FECHA_EGRESO" &lt; #{fechaEgreso}	  	
+	</select>	
+	
+	<select id="obtenerEventosBancoByParams" resultMap="eventoResultLtSF">
+		SELECT "E"."ID_EVENTO", "E"."ID_IMPLANT", "E"."ID_HOSP", "E"."FECHA_INGRESO", "E"."FECHA_CAPTURA","E"."FECHA_EGRESO",
+	       "E"."ID_CLIENTE", "E"."ID_TIPO_SEGURO", "E"."ID_TIPO_EVENTO", "E"."ID_DIAGN_INGRESO_1", 
+       	"E"."ID_ANTECEDENTES", "E"."ID_PROCEDIMIENTO", "E"."ID_TIPO_TRATAMIENTO_QUIRURGICO", 
+       "E"."NUM_HABITACION", "E"."ID_MEDICO_TRATANTE", "E"."ID_DIAGN_INGRESO_2","E"."DIAS_INCAPACIDAD","E"."ID_DIAGN_EGRESO_1","E"."ID_PROCEDIMIENTO_1","E"."ID_PROCEDIMIENTO_2","E"."TOTAL_DESVIOS_COMPROBADOS","E"."MONTO_FINAL_FACTURACION","E"."MONTO_ANTES_DESVIOS",
+       "E"."IVA_FINALIZAR_EVENTO","E"."COASEGURO_FINALIZAR_EVENTO","E"."DEDUCIBLE_FINALIZAR_EVENTO","E"."DESCUENTO_HOSP_FINALIZAR_EVENTO", "E"."FOLIO_ARGAL", "E"."FOLIO_HOSP","E"."HORA_INGRESO","E"."FECHA_EGRESO_CAPT"
+  		FROM "EVENTO" "E" INNER JOIN "REG_SEG_PERSONAL" "RS" ON "E"."ID_EVENTO"="RS"."ID_EVENTO" 
+  		<if test="statusEvento==3">
+	  		AND "E"."STATUS_EVENTO" = #{statusEvento} 
+	  	</if>
+	  	<if test="fechaIngreso!=null">	
+	  		AND "E"."FECHA_CAPTURA" >= #{fechaIngreso}
+	  	</if>
+	  	<if test="fechaEgreso!=null" >	
+	  		AND ("E"."FECHA_CAPTURA" &lt; #{fechaEgreso} OR "E"."FECHA_CAPTURA" IS NULL)  
+	  	</if>
+	  
+	</select>
+	<select id="obtenerEventosAseguradoraByParams" resultMap="eventoResult">
+		SELECT distinct ON ("E"."ID_EVENTO"), "E"."ID_IMPLANT", "E"."ID_HOSP", "E"."FECHA_INGRESO", "E"."FECHA_CAPTURA", 
+	       "E"."ID_CLIENTE", "E"."ID_TIPO_SEGURO", "E"."ID_TIPO_EVENTO", "E"."ID_DIAGN_INGRESO_1", 
+       	"E"."ID_ANTECEDENTES", "E"."ID_PROCEDIMIENTO", "E"."ID_TIPO_TRATAMIENTO_QUIRURGICO", 
+       "E"."NUM_HABITACION", "E"."ID_MEDICO_TRATANTE", "E"."ID_DIAGN_INGRESO_2",
+       "E"."IVA_FINALIZAR_EVENTO","E"."COASEGURO_FINALIZAR_EVENTO","E"."DEDUCIBLE_FINALIZAR_EVENTO",
+       "E"."DESCUENTO_HOSP_FINALIZAR_EVENTO", "E"."FOLIO_ARGAL", "E"."FOLIO_HOSP","E"."HORA_INGRESO" 
+  		FROM "EVENTO" "E" INNER JOIN "REG_GASTOS_MAYORES" "RS" ON "E"."ID_EVENTO"="RS"."ID_EVENTO" 
+  		<if test="statusEvento==3">
+	  		AND "E"."STATUS_EVENTO" = #{statusEvento} 
+	  	</if>
+	  	<if test="fechaIngreso!=null">	
+	  		AND "E"."FECHA_CAPTURA" >= #{fechaIngreso}
+	  	</if>
+	  	<if test="fechaEgreso!=null" >	  
+	  		AND "E"."FECHA_CAPTURA" &lt; #{fechaEgreso}
+	  	</if>
+	</select>
+
+	<select id="obtenerEventosBanco" resultMap="eventoResult">
+		SELECT "E"."ID_EVENTO", "E"."ID_IMPLANT", "E"."ID_HOSP", "E"."FECHA_INGRESO", "E"."FECHA_CAPTURA","E"."FECHA_EGRESO", 
+	       "E"."ID_CLIENTE", "E"."ID_TIPO_SEGURO", "E"."ID_TIPO_EVENTO", "E"."ID_DIAGN_INGRESO_1", 
+       	"E"."ID_ANTECEDENTES", "E"."ID_PROCEDIMIENTO", "E"."ID_TIPO_TRATAMIENTO_QUIRURGICO", 
+       "E"."NUM_HABITACION", "E"."ID_MEDICO_TRATANTE", "E"."ID_DIAGN_INGRESO_2",
+       "E"."IVA_FINALIZAR_EVENTO","E"."COASEGURO_FINALIZAR_EVENTO","E"."DEDUCIBLE_FINALIZAR_EVENTO","E"."DESCUENTO_HOSP_FINALIZAR_EVENTO", "E"."FOLIO_ARGAL", "E"."FOLIO_HOSP","E"."HORA_INGRESO" 
+  		FROM "EVENTO" "E" INNER JOIN "REG_SEG_PERSONAL" "RS" ON "E"."ID_EVENTO"="RS"."ID_EVENTO";
+	</select>
+	<select id="selectImplant" parameterType="int" resultMap="implantResult" resultType="Implant">		 
+		select * from "IMPLANT" where "ID_IMPLANT"=#{idImplant} 	
+	</select> 
+	<select id="selectRegistroSeguroPersonal" parameterType="int" resultMap="registroSeguroPersonalResult" resultType="RegistroSeguroPersonal">		 
+		select * from "REG_SEG_PERSONAL" where "ID_EVENTO"=#{idEvento}
+	</select>
+	<select id="selectRegistroGastosMayores" parameterType="int" resultMap="registroGastosMayoresResult" resultType="RegistroGastosMayores">		 
+		select * from "REG_GASTOS_MAYORES" where "ID_EVENTO"=#{idEvento} 	
+	</select>
+	<select id="selectGastoRegistroSeguroPersonal" parameterType="int" resultMap="gastoRegistroSeguroPersonalResult" resultType="GastoRegistroSeguroPersonal">		 
+		select * from "GASTO_REG_SEG_PERSONAL" where "ID_REG_SEG_PERSONAL"=#{idRegistroSeguroPersonal}
+	</select>
+				
+	<select id="obtenerIcds" resultMap="icdResult" resultType="Icd">		 
+		select * from "ICD" 	 
+	</select>		 
+	<select id="obtenerCpts" resultMap="cptResult" resultType="Cpt">		 
+		select * from "CPT"
+	</select>
+	<select id="obtenerMedicosTratantes" resultMap="medTratResult" resultType="MedicoTratante">		 
+		select * from "MEDICO_TRATANTE" where "ACTIVO"=true 	
+	</select> 	
+	<select id="selectHospital" parameterType="int" resultMap="hospitalResult" resultType="Hospital">		 
+		select * from "HOSPITAL" where "ID_HOSP"=#{idHospital} 	
+	</select>	
+	
+	<resultMap id="clienteResult" type="Cliente">
+    	<id property="idCliente" column="ID_CLIENTE" />
+    	<result property="nombreCliente" column="NOMBRE_CLIENTE" />
+    	<result property="razonSocialCliente" column="RAZON_SOCIAL_CLIENTE" />
+    	<result property="empresaCliente" column="EMPRESA_CLIENTE" />
+    	<result property="nombreCorto" column="NOMBRE_CORTO" />
+	</resultMap>
+	<select id="selectCliente" parameterType="int" resultMap="clienteResult" resultType="Cliente">		 
+		select * from "CLIENTE" where "ID_CLIENTE"=#{idCliente} 	
+	</select>
+	
+	<resultMap id="tipoSeguroResult" type="TipoSeguro">
+    	<id property="idTipoSeguro" column="ID_TIPO_SEGURO" />
+    	<result property="descripcion" column="DESCRIPCION" />
+	</resultMap>
+	<select id="selectTipoSeguro" parameterType="int" resultMap="tipoSeguroResult" resultType="TipoSeguro">		 
+		select * from "TIPO_SEGURO" where "ID_TIPO_SEGURO"=#{idTipoSeguro} 	
+	</select>
+	
+	<resultMap id="tipoEventoResult" type="TipoEvento">
+    	<id property="idTipoEvento" column="ID_TIPO_EVENTO" />
+    	<result property="descripcion" column="DESCRIPCION" />
+	</resultMap>
+	
+	<select id="selectTipoEvento" parameterType="int" resultMap="tipoEventoResult" resultType="TipoEvento">		 
+		select * from "TIPO_EVENTO" where "ID_TIPO_EVENTO"=#{idTipoEvento} 	
+	</select>
+	
+	<insert id="agregarEvento" parameterType="Evento" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_evento')
+  		</selectKey>
+  		INSERT INTO "EVENTO"(
+            "ID_EVENTO", "ID_IMPLANT", "ID_HOSP", "FECHA_INGRESO", "FECHA_CAPTURA", 
+            "ID_CLIENTE", "ID_TIPO_SEGURO", "ID_TIPO_EVENTO", "ID_DIAGN_INGRESO_1",
+            "ID_DIAGN_INGRESO_2","ID_ANTECEDENTES",             
+            "NUM_HABITACION", "ID_MEDICO_TRATANTE","STATUS_EVENTO", "FOLIO_ARGAL", "FOLIO_HOSP","HORA_INGRESO","MEDICO_DICTAMINADOR")
+    			VALUES (#{id}, #{implant.idImplant}, #{hospital.idHospital},date(#{fechaIngreso}),date( #{fechaCaptura}),  
+		            #{cliente.idCliente}, #{tipoSeguro.idTipoSeguro}, #{tipoEvento.idTipoEvento}, #{diagnosticoIngreso1.idIcd},
+					#{diagnosticoIngreso2.idIcd},#{antecedente.idAntecedente},		            		            
+            		#{numHabitacion}, #{medicoTratante.idMedicoTratante},1,#{folioArgal},#{folioHospital},cast(#{horaIngreso} as time),#{medicoDictaminador});
+         <if test="registroSeguroPersonal != null">
+    		INSERT INTO "REG_SEG_PERSONAL"(
+            	"ID_REG_SEG_PERSONAL", "ID_EVENTO", "NUM_NOMINA", "INSTITUCION", 
+            	"NOMBRE_TITULAR", "APP_TITULAR", "APM_TITULAR",
+            	"NOMBRE_PACIENTE", "APP_PACIENTE", "APM_PACIENTE",
+            	"EDAD_PACIENTE", "UNIDAD_EDAD", "SEXO_PACIENTE", "RELACION_PACIENTE", "NUM_AUTORIZACION",
+            	"NAC_FECHA_NACIMIENTO", "NAC_HORA_NACIMIENTO", "NAC_TIPO_PARTO", 
+            	"NAC_TALLA", "NAC_PESO", "NAC_APGAR", "NAC_MEDICO_TRATANTE",
+            	"CENSO","CONDICION_PACIENTE")
+            	
+            	VALUES (#{id}, #{id}, #{registroSeguroPersonal.numeroNomina},#{registroSeguroPersonal.institucion},
+            	#{registroSeguroPersonal.nombreTitular},#{registroSeguroPersonal.appTitular},#{registroSeguroPersonal.apmTitular},
+            	#{registroSeguroPersonal.nombrePaciente},#{registroSeguroPersonal.appPaciente},#{registroSeguroPersonal.apmPaciente},
+            	#{registroSeguroPersonal.edadPaciente},#{registroSeguroPersonal.unidadEdadPaciente},#{registroSeguroPersonal.sexoPaciente},
+            	#{registroSeguroPersonal.relacionPaciente},#{registroSeguroPersonal.numAutorizacion},
+		       	#{registroSeguroPersonal.nacimientoFechaNacimiento},cast(#{registroSeguroPersonal.nacimientoHoraNacimiento} as time),
+            	#{registroSeguroPersonal.nacimientoTipoParto},#{registroSeguroPersonal.nacimientoTalla},
+            	#{registroSeguroPersonal.nacimientoPeso},#{registroSeguroPersonal.nacimientoApgar},
+            	#{registroSeguroPersonal.nacimientoMedicoTratante},#{registroSeguroPersonal.censo},#{registroSeguroPersonal.condicionPaciente}   	
+            	)
+    	</if>	
+    	<if test="registroGastosMayores != null">
+    		INSERT INTO "REG_GASTOS_MAYORES"(
+            	"ID_REG_GASTOS_MAYORES", "ID_EVENTO", "NO_POLIZA", "DEDUCIBLE_POLIZA","COASEGURO_MED", 
+            	"SUMA_ASEGURADA", "MONTO_CARTA_AUT_INI", "TAB_HONOR_MEDIC",
+            	"NOMBRE_TITULAR","APP_TITULAR", "APM_TITULAR", 
+            	"NOMBRE_PACIENTE", "APP_PACIENTE", "APM_PACIENTE", 
+            	"EDAD_PACIENTE", "UNIDAD_EDAD", "SEXO_PACIENTE", 
+            	"RELACION_PACIENTE","NAC_FECHA_NACIMIENTO", "NAC_HORA_NACIMIENTO", "NAC_TIPO_PARTO", 
+            	"NAC_TALLA", "NAC_PESO", "NAC_APGAR", "NAC_MEDICO_TRATANTE")
+            	
+            	
+            	VALUES (#{id}, #{id}, #{registroGastosMayores.numeroPoliza},#{registroGastosMayores.coaseguroMedico},#{registroGastosMayores.deduciblePoliza},
+            	#{registroGastosMayores.sumaAsegurada},#{registroGastosMayores.montoCartaAutInicial},#{registroGastosMayores.tablaHonorariosMedicos},            	            	
+            	#{registroGastosMayores.nombreTitular},#{registroGastosMayores.appTitular},#{registroGastosMayores.apmTitular},
+            	#{registroGastosMayores.nombrePaciente},#{registroGastosMayores.appPaciente},#{registroGastosMayores.apmPaciente},
+            	#{registroGastosMayores.edadPaciente},#{registroGastosMayores.unidadEdadPaciente},#{registroGastosMayores.sexoPaciente},
+            	#{registroGastosMayores.relacionPaciente},
+		       	#{registroGastosMayores.nacimientoFechaNacimiento},cast(#{registroGastosMayores.nacimientoHoraNacimiento} as time),
+            	#{registroGastosMayores.nacimientoTipoParto},#{registroGastosMayores.nacimientoTalla},
+            	#{registroGastosMayores.nacimientoPeso},#{registroGastosMayores.nacimientoApgar},
+            	#{registroGastosMayores.nacimientoMedicoTratante}
+            	)
+    	</if>	    	  
+	</insert>
+	<insert id="editarEvento" parameterType="Evento">
+  		 UPDATE "EVENTO"
+  		   SET 
+            "ID_HOSP" =#{hospital.idHospital} ,"FECHA_INGRESO" = date(#{fechaIngreso}), 
+            "ID_CLIENTE"= #{cliente.idCliente},"ID_TIPO_EVENTO"=#{tipoEvento.idTipoEvento}, "ID_DIAGN_INGRESO_1"=#{diagnosticoIngreso1.idIcd},
+            "ID_DIAGN_INGRESO_2"=#{diagnosticoIngreso2.idIcd},"ID_ANTECEDENTES"=#{antecedente.idAntecedente},             
+            "NUM_HABITACION"=#{numHabitacion}, "ID_MEDICO_TRATANTE"=#{medicoTratante.idMedicoTratante},
+            "FOLIO_ARGAL"=#{folioArgal}, 
+            "FOLIO_HOSP"=#{folioHospital},"HORA_INGRESO"=cast(#{horaIngreso} as time),
+            "MEDICO_DICTAMINADOR"=#{medicoDictaminador}
+            WHERE "ID_EVENTO"=#{idEvento};
+         <if test="registroSeguroPersonal != null">
+    		UPDATE "REG_SEG_PERSONAL" SET
+            	"NUM_NOMINA" =#{registroSeguroPersonal.numeroNomina}, "INSTITUCION"=#{registroSeguroPersonal.institucion}, 
+            	"NOMBRE_TITULAR"=#{registroSeguroPersonal.nombreTitular}, "APP_TITULAR"=#{registroSeguroPersonal.appTitular},
+            	"APM_TITULAR"=#{registroSeguroPersonal.apmTitular},
+            	"NOMBRE_PACIENTE"=#{registroSeguroPersonal.nombrePaciente},
+            	"APP_PACIENTE"=#{registroSeguroPersonal.appPaciente}, "APM_PACIENTE"=#{registroSeguroPersonal.apmPaciente},
+            	"EDAD_PACIENTE"=#{registroSeguroPersonal.edadPaciente},"UNIDAD_EDAD"=#{registroSeguroPersonal.unidadEdadPaciente},
+            	"SEXO_PACIENTE"=#{registroSeguroPersonal.sexoPaciente}, "RELACION_PACIENTE"=#{registroSeguroPersonal.relacionPaciente}, "NUM_AUTORIZACION"=#{registroSeguroPersonal.numAutorizacion},
+            	"NAC_FECHA_NACIMIENTO"=#{registroSeguroPersonal.nacimientoFechaNacimiento}, "NAC_HORA_NACIMIENTO"=cast(#{registroSeguroPersonal.nacimientoHoraNacimiento} as time),
+            	"NAC_TIPO_PARTO"=#{registroSeguroPersonal.nacimientoTipoParto},
+            	"NAC_TALLA"=#{registroSeguroPersonal.nacimientoTalla}, "NAC_PESO"=#{registroSeguroPersonal.nacimientoPeso},
+            	"NAC_APGAR"=#{registroSeguroPersonal.nacimientoApgar},
+            	"NAC_MEDICO_TRATANTE"=#{registroSeguroPersonal.nacimientoMedicoTratante},
+            	"CENSO"=#{registroSeguroPersonal.censo},"CONDICION_PACIENTE"=#{registroSeguroPersonal.condicionPaciente}          	   	
+            		WHERE "ID_REG_SEG_PERSONAL" = #{registroSeguroPersonal.idRegistroSeguroPersonal}
+    	</if>	
+    	<if test="registroGastosMayores != null">
+    		UPDATE "REG_GASTOS_MAYORES" SET
+            	"NO_POLIZA"=#{registroGastosMayores.numeroPoliza},
+            	"DEDUCIBLE_POLIZA"=#{registroGastosMayores.deduciblePoliza}, "COASEGURO_MED"=#{registroGastosMayores.coaseguroMedico}, 
+            	"SUMA_ASEGURADA"=#{registroGastosMayores.sumaAsegurada}, "MONTO_CARTA_AUT_INI"=#{registroGastosMayores.montoCartaAutInicial},
+            	"TAB_HONOR_MEDIC"=#{registroGastosMayores.tablaHonorariosMedicos},
+            	"NOMBRE_TITULAR"=#{registroGastosMayores.nombreTitular},"APP_TITULAR"=#{registroGastosMayores.appTitular},
+            	"APM_TITULAR"=#{registroGastosMayores.apmTitular}, 
+            	"NOMBRE_PACIENTE"=#{registroGastosMayores.nombrePaciente}, 
+            	"APP_PACIENTE"=#{registroGastosMayores.appPaciente}, "APM_PACIENTE"=#{registroGastosMayores.apmPaciente}, 
+            	"EDAD_PACIENTE"=#{registroGastosMayores.edadPaciente}, "UNIDAD_EDAD"=#{registroGastosMayores.unidadEdadPaciente},
+            	"SEXO_PACIENTE"=#{registroGastosMayores.sexoPaciente}, 
+            	"RELACION_PACIENTE"=#{registroGastosMayores.relacionPaciente},
+            	"NAC_FECHA_NACIMIENTO"=#{registroGastosMayores.nacimientoFechaNacimiento}, "NAC_HORA_NACIMIENTO"=cast(#{registroGastosMayores.nacimientoHoraNacimiento} as time),
+            	"NAC_TIPO_PARTO"=#{registroGastosMayores.nacimientoTipoParto},
+            	"NAC_TALLA"=#{registroGastosMayores.nacimientoTalla}, "NAC_PESO"=#{registroGastosMayores.nacimientoPeso},
+            	"NAC_APGAR"=#{registroGastosMayores.nacimientoApgar},
+            	"NAC_MEDICO_TRATANTE"=#{registroGastosMayores.nacimientoMedicoTratante}
+            	         	
+	        	WHERE "ID_REG_GASTOS_MAYORES" = #{registroGastosMayores.idRegistroGastosMayores}
+    		</if>	    	  
+	</insert>
+	
+	<insert id="agregarGastoEvitado" parameterType="Evento" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_gasto')
+  		</selectKey>
+		<if test="gastos != null">
+			<foreach  collection="gastos" item="grsp">
+			<if test="grsp != null">
+    			INSERT INTO "GASTO_EVENTO"(
+            		"ID_GASTO_EVENTO", "ID_EVENTO", "ID_TIPO_CARGO", 
+            		"ID_AREA", "ID_RUBRO", "ID_RAZON", "FECHA_INGRESO", "NOMBRE", 
+            		"MONTO_UNITARIO", "CANTIDAD", "TIPO_EVIDENCIA","ARCHIVO")            			
+           		 	VALUES (#{id}, #{idEvento}, #{grsp.idTipoCargo},
+	            		#{grsp.idArea},#{grsp.idRubro},#{grsp.idRazon},#{grsp.fechaIngreso},#{grsp.nombre},#{grsp.montoUnitario},
+            			#{grsp.cantidad},#{grsp.rutaEvidencia},
+            			#{grsp.archivo,javaType=byte[],jdbcType=BINARY,typeHandler=org.apache.ibatis.type.ByteArrayTypeHandler}
+            	    );
+            </if>
+        </foreach>    
+        </if>            
+    </insert>
+    
+	<insert id="agregarGasto" parameterType="Evento" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_gasto')
+  		</selectKey>
+		<if test="gastos != null">
+			<foreach  collection="gastos" item="grsp">
+			<if test="grsp != null">
+    			INSERT INTO "GASTO_EVENTO"(
+            		"ID_GASTO_EVENTO", "ID_EVENTO", "ID_TIPO_CARGO", 
+            		"ID_AREA", "ID_RUBRO", "ID_RAZON", "FECHA_INGRESO", "NOMBRE", 
+            		"MONTO_UNITARIO", "CANTIDAD", "TIPO_EVIDENCIA")            	 	
+           		 	VALUES (#{id}, #{idEvento}, #{grsp.idTipoCargo},
+	            		#{grsp.idArea},#{grsp.idRubro},#{grsp.idRazon},#{grsp.fechaIngreso},#{grsp.nombre},#{grsp.montoUnitario},
+            			#{grsp.cantidad},#{grsp.rutaEvidencia}
+            	    );
+            </if>
+        </foreach>    
+        </if>            
+    </insert>
+     
+    <update id="actualizarTotalMontoAntesDesvios" parameterType="Evento" >
+      	   UPDATE "EVENTO" SET "MONTO_ANTES_DESVIOS" = #{montoAntesDesvios}, "TOTAL_DESVIOS"=#{totalDesvios} WHERE "ID_EVENTO"=#{idEvento};
+    </update>
+    
+    <update id="guardarEditarGasto" parameterType="Evento" >
+    	<if test="gastos != null">
+			<foreach  collection="gastos" item="grsp">		
+				<if test="grsp != null">				   
+            	    UPDATE "GASTO_EVENTO"
+   						SET "ID_TIPO_CARGO"=#{grsp.idTipoCargo}, 
+       					"ID_AREA"=#{grsp.idArea}, "ID_RUBRO"=#{grsp.idRubro}, "ID_RAZON"=#{grsp.idRazon}, "NOMBRE"=#{grsp.nombre}, 
+       					"MONTO_UNITARIO"=#{grsp.montoUnitario}, "CANTIDAD"=#{grsp.cantidad}, "TIPO_EVIDENCIA"=#{grsp.rutaEvidencia}
+ 						WHERE "ID_GASTO_EVENTO"=#{grsp.idGasto}; 					
+            	</if>
+        	</foreach>    
+        </if>    
+    </update>		  	
+    
+    <insert id="agregarBitacora" parameterType="Evento" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_bitacora')
+  		</selectKey>
+		<if test="bitacoras != null">
+			<foreach  collection="bitacoras" item="grsp">
+			<if test="grsp != null">
+    			INSERT INTO "BITACORA_MEDICA"(
+            		"ID_BITACORA_MEDICA", "ID_REGISTRO", "OBSERVACIONES", "ID_EVENTO", 
+            			"FECHA_BITACORA","DESCRIPCION_BITACORA","INTERCONSULTA")	
+           		 	VALUES (#{id}, #{grsp.idRegistroMedico},
+	            		#{grsp.observaciones},#{idEvento},date(#{grsp.fechaBitacora}),#{grsp.descripcion},#{grsp.interconsulta}	         		
+            	    );
+            </if>
+        </foreach>    
+        </if>            
+    </insert>
+    
+    <insert id="agregarMedicoTratante" parameterType="MedicoTratante" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_med_tratante')
+  		</selectKey>
+  		INSERT INTO "MEDICO_TRATANTE"(
+            "ID_MEDICO_TRATANTE", "NOMBRE", 
+            "TIPO_MED")VALUES (#{id}, #{nombre},#{tipo});
+		<if test="especialidades != null">	
+			<foreach  collection="especialidades" item="grsp">
+			<if test="grsp != null">
+    			INSERT INTO "ESPECIALIDAD_MEDICO_TRATANTE"(
+            		"ID_MEDICO_TRATANTE", "ID_ESPECIALIDAD")
+             	VALUES (#{id},
+	            		#{grsp.idEspecialidad});
+            </if>
+        </foreach>    
+        </if>            
+    </insert>
+    
+    <update id="desactivarMedicoTratante" parameterType="int" >
+	    UPDATE "MEDICO_TRATANTE" SET "ACTIVO" = FALSE  
+			WHERE "ID_MEDICO_TRATANTE"=#{id};
+    </update>
+    
+    <update id="actualizarMontosFinalesFacturacion" parameterType="Evento" >
+	    UPDATE "EVENTO" SET "MONTO_FINAL_FACTURACION" =  
+            #{montoFinalFacturacion},"MONTO_DESVIOS_FACTURACION" = #{montoDesviosFacturacion},
+           	 "MONTO_AJUSTE_FACTURACION" = #{montoAjusteFacturacion} WHERE "ID_EVENTO"=#{idEvento};
+    </update>
+
+    <insert id="agregarFactura" parameterType="Evento" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_factura')
+  		</selectKey>
+		<if test="facturas != null">
+			<foreach  collection="facturas" item="grsp">
+			<if test="grsp != null">
+    			INSERT INTO "FACTURA"(
+            		"ID_FACTURA", "NUM_FACTURA", "APROBADA", "DETALLE", "OBSERVACIONES", 
+            				"RUTA_FACTURA", "ID_EVENTO", "MONTO","AJUSTE_FACTURA","MONTO_CFC","TIPO_CFC","FOLIO_CFC")	
+           		 	VALUES (#{id}, #{grsp.numeroFactura},#{grsp.aprobada},#{grsp.detalle},#{grsp.observaciones},
+	            		#{grsp.rutaFactura},#{idEvento},#{grsp.monto},#{grsp.ajusteFactura},#{grsp.montoComprobanteFiscalCorregido},#{grsp.tipoComprobanteFiscalCorregido},#{grsp.folioComprobanteFiscalCorregido}
+            	    );
+            	    <if test="grsp.aprobada == 'SI'">
+            	 	   UPDATE "EVENTO" SET "NUM_FACTURAS_APROBADAS" = ((SELECT "NUM_FACTURAS_APROBADAS" FROM "EVENTO" WHERE "ID_EVENTO"=#{idEvento})+1) WHERE "ID_EVENTO"=#{idEvento};
+            	 	</if>
+            	 	<if test="grsp.aprobada != 'SI'">
+            	 	   UPDATE "EVENTO" SET "NUM_FACTURAS_RECHAZADAS" = ((SELECT "NUM_FACTURAS_RECHAZADAS" FROM "EVENTO" WHERE "ID_EVENTO"=#{idEvento})+1) WHERE "ID_EVENTO"=#{idEvento};        	 	             	 	              	 	             	 	           	 	   
+            	 	</if>
+            </if>   
+        </foreach>    
+        </if>            
+    </insert>
+	<update id="eliminarFactura" parameterType="Evento" >		
+		<if test="facturas != null">
+			<foreach  collection="facturas" item="grsp">
+				<if test="grsp != null">
+    				DELETE FROM "FACTURA" WHERE "ID_FACTURA"=#{grsp.idFactura};         	
+            		<if test="grsp.aprobada == 'SI'">
+            		 	   UPDATE "EVENTO" SET "NUM_FACTURAS_APROBADAS" = ((SELECT "NUM_FACTURAS_APROBADAS" FROM "EVENTO" WHERE "ID_EVENTO"=#{idEvento})-1) WHERE "ID_EVENTO"=#{idEvento};
+            		</if>
+            		<if test="grsp.aprobada != 'SI'">
+            	 		   UPDATE "EVENTO" SET "NUM_FACTURAS_RECHAZADAS" = ((SELECT "NUM_FACTURAS_RECHAZADAS" FROM "EVENTO" WHERE "ID_EVENTO"=#{idEvento})-1) WHERE "ID_EVENTO"=#{idEvento};
+            		</if>        	
+       		   	</if>
+        	</foreach>    
+        </if>            
+	</update>    
+
+    <update id="editarBitacora" parameterType="Evento" >		
+		<if test="bitacoras != null">
+			<foreach  collection="bitacoras" item="grsp">
+			<if test="grsp != null">
+				UPDATE "BITACORA_MEDICA"
+	   				SET "ID_REGISTRO"=#{grsp.idRegistroMedico}, "INTERCONSULTA"=#{grsp.interconsulta},"OBSERVACIONES"=#{grsp.observaciones}, "FECHA_BITACORA"=#{grsp.fechaBitacora}
+    				WHERE "ID_BITACORA_MEDICA"=#{grsp.idBitacora};
+            </if>
+        </foreach>    
+        </if>            
+    </update>
+    
+    <update id="registrarAltaPaciente" parameterType="Evento" >
+ 		<if test="causaDirectaDef == null">
+    		UPDATE "EVENTO" SET
+    	    "FECHA_EGRESO"=#{fechaEgreso}, 
+    	    "ID_DIAGN_EGRESO_1"=#{diagnosticoEgreso1.idIcd},
+    	    "ID_PROCEDIMIENTO_1"=#{procedimiento1.idCpt}, "ID_PROCEDIMIENTO_2"=#{procedimiento2.idCpt}, 
+    	   	"HORA_EGRESO"=cast(#{horaEgreso} as time),
+    	   	"MOTIVO_EGRESO"=#{motivoEgreso},"EVENTOS_NO_DESEAB_ENT_HOSP"=#{eventosNoDeseablesEntornoHosp},"STATUS_EVENTO"=2,"DIAS_INCAPACIDAD"=#{diasIncapacidad},
+    	   	"HORA_EGRESO_CAPT"=now(), "FECHA_EGRESO_CAPT"=current_date
+ 			WHERE "ID_EVENTO"=#{idEvento};
+ 		</if>     
+
+    	<if test="causaDirectaDef != null">
+    		UPDATE "EVENTO" SET
+    	    "FECHA_EGRESO"=#{fechaEgreso}, "ID_DIAGN_EGRESO_1"=#{diagnosticoEgreso1.idIcd}, "ID_PROCEDIMIENTO_1"=#{procedimiento1.idCpt}, "ID_PROCEDIMIENTO_2"=#{procedimiento2.idCpt}, 
+    	   	"MOTIVO_EGRESO"=#{motivoEgreso},"EVENTOS_NO_DESEAB_ENT_HOSP"=#{eventosNoDeseablesEntornoHosp},"STATUS_EVENTO"=2,
+    	   	"HORA_EGRESO"=cast(#{horaEgreso} as time),
+   	    	"FECHA_DEF"=#{fechaDef},"HORA_DEF"=cast(#{horaDef} as time),"CAUSA_DIRECTA_DEF"=#{causaDirectaDef},"DIAS_INCAPACIDAD"=#{diasIncapacidad},"FECHA_EGRESO_CAPT"=current_date 
+ 			WHERE "ID_EVENTO"=#{idEvento};
+ 		</if>
+    </update>
+    
+    <update id="finalizarMontosEvento" parameterType="Evento" >
+    	UPDATE "EVENTO" SET
+        "STATUS_EVENTO"=3,
+        "MONTO_ANTES_DESVIOS"=#{montoAntesDesvios},"TOTAL_DESVIOS"=#{totalDesvios},"TOTAL_DESVIOS_COMPROBADOS"=#{totalDesviosComprobados},
+        "IVA_FINALIZAR_EVENTO"=#{ivaFinalizarEvento},"COASEGURO_FINALIZAR_EVENTO"=#{coaseguroFinalizarEvento},"DEDUCIBLE_FINALIZAR_EVENTO"=#{deducibleFinalizarEvento},
+        "DESCUENTO_HOSP_FINALIZAR_EVENTO"=#{descuentoHospFinalizarEvento},"NUM_FACTURAS_APROBADAS"=#{numFacturasAprobadas},"NUM_FACTURAS_RECHAZADAS"=#{numFacturasRechazadas},
+        "MONTO_DESVIOS_FACTURACION"=#{montoDesviosFacturacion},"MONTO_AJUSTE_FACTURACION"=#{montoAjusteFacturacion},"MONTO_FACTURACION_CORREGIDO"=#{montoFacturacionCorregido},
+        "MONTO_FINAL_FACTURACION"=#{montoFinalFacturacion}                		
+ 		WHERE "ID_EVENTO"=#{idEvento};    
+  		    <if test="registroSeguroPersonal != null">
+ 		    	UPDATE "REG_SEG_PERSONAL" SET "CAPITA"=#{registroSeguroPersonal.capita}, "CANTIDAD_CUB_CONVENIO"=#{registroSeguroPersonal.cantidadCubiertaConvenio}
+ 		    		WHERE "ID_EVENTO"=#{idEvento}
+ 		    </if>	
+ 		
+    </update>
+
+	<delete id="eliminarBitacorasByIdEvento" parameterType="Evento">
+    	DELETE FROM "BITACORA_MEDICA" WHERE "ID_EVENTO"=#{idEvento};    	
+    </delete>
+    <delete id="eliminarGastosByIdEvento" parameterType="Evento">
+    	DELETE FROM "GASTO_EVENTO" WHERE "ID_EVENTO"=#{idEvento};    	
+    </delete>
+    <delete id="eliminarRegSegPersonalByIdEvento" parameterType="Evento">
+    	DELETE FROM "REG_SEG_PERSONAL" WHERE "ID_EVENTO"=#{idEvento};    	
+    </delete>
+    <delete id="eliminarEventoByIdEvento" parameterType="Evento">
+    	DELETE FROM "EVENTO" WHERE "ID_EVENTO"=#{idEvento};    	
+    </delete>
+    
+    <delete id="eliminarGastoEvento" parameterType="Evento">
+    	<if test="gastos != null">
+			<foreach  collection="gastos" item="grsp">
+    			DELETE FROM "GASTO_EVENTO" WHERE "ID_GASTO_EVENTO"=#{grsp.idGasto};
+    		</foreach>
+    	</if>
+    </delete>
+    
+    <delete id="eliminarBitacora" parameterType="int">
+    	DELETE FROM "BITACORA_MEDICA" WHERE "ID_BITACORA_MEDICA"=#{id};
+    </delete>
+    
+    <insert id="finalizarEvento" parameterType="Evento" keyProperty="id">
+    	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   		SELECT nextVal('sec_factura')
+  		</selectKey>
+    	UPDATE "EVENTO" SET
+        "MONTO_ANTES_DESVIOS"=#{montoAntesDesvios}, "MONTO_DESPUES_DESVIOS"=#{montoDespuesDesvios}, "DESC_HOSPITAL"=#{descuentoHospital},"COMENTARIOS_DIF_FACTURACION"=#{comentariosDiferenciaFacturacion},
+        "DIF_FACT_MENOS_DESVIOS"=#{difFacturacionMontMenosDesvios},"DESCUENTO_NO_APLICADO"=#{descuentoNoAplicado}, "CARGOS_PERSONALES"=#{cargosPersonales},
+        "TOTAL_DESVIOS"=#{totalDesvíos},"AJUSTE_FACTURA"=#{ajusteFactura}, "TIPO_COMPROBANTE_FISCAL_COR"=#{tipoComprobanteFiscalCorregido}, 
+        "FOLIO_COMPROB_FISCAL_COR"=#{folioComprobanteFiscalCorregido},"MONTO_COMPROB_FISCAL_COR"=#{montoComprobanteFiscalCorregido}, 
+        "JUSTIFICACION_TERAPIA_INT"=#{justificacionTerapiaIntensiva},"JUSTIFICACION_MEDICAMENTOS"=#{justificacionMedicamentos}, "JUSTIFICACION_MATERIALES"=#{justificacionMaterialesEquipos},
+        "JUSTIFICACION_BANCO_SANGRE"=#{justificacionBancoSangre},"JUSTIFICACION_QUIROFANO"=#{justificacionQuirofano},
+        "JUSTIFICACION_OTROS"=#{justificacionOtros}, "JUSTIFICACION_OBSERVACIONES"=#{justificacionObservaciones}
+ 		WHERE "ID_EVENTO"=#{idEvento};		
+    </insert>	
+    
+    <update id="agregarFileGasto" parameterType="Gasto" >
+    	UPDATE "GASTO_EVENTO" SET "TIPO_EVIDENCIA"=#{rutaEvidencia}, "ARCHIVO"=
+    	#{archivo,javaType=byte[],jdbcType=BINARY,typeHandler=org.apache.ibatis.type.ByteArrayTypeHandler} 
+    	WHERE "ID_GASTO_EVENTO"=#{idGasto};
+    </update>
+    
+    <update id="agregarFileFactura" parameterType="Factura" >
+    	UPDATE "FACTURA" SET "RUTA_FACTURA"=#{rutaFactura}, "ARCHIVO"=
+    	#{archivo,javaType=byte[],jdbcType=BINARY,typeHandler=org.apache.ibatis.type.ByteArrayTypeHandler} 
+    	WHERE "ID_FACTURA"=#{idFactura};
+    </update>
+           
+</mapper>

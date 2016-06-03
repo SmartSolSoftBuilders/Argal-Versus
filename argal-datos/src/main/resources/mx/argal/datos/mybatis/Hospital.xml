@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mx.argal.dao.HospitalDao">
+
+	<resultMap type="Hospital" id="hospitalResult">
+		<id property="idHospital" column="ID_HOSP"/>
+		<result property="nombreHospital" column="NOMBRE_HOSP"/>		
+		<result property="direccionHospital" column="DIR_HOSP"/>
+		<result property="coloniaHospital" column="COL_HOSP"/>
+		<result property="municipioDelHospital" column="MUN_DEL_HOSP"/>
+		<result property="estadoHospital" column="ESTADO_HOSP"/>		
+		<result property="cpHospital" column="CP_HOSP"/>
+		<result property="conmutadorHospital" column="CONMUTADOR_HOSP"/>		
+		<result property="telModuloHospital" column="TEL_DIR_MOD_HOSP"/>
+		<result property="ciudadHospital" column="CIUDAD_HOSP"/>
+		<result property="paisHospital" column="PAIS_HOSP"/>
+		<result property="activoHospital" column="ACTIVO_HOSP"/>
+	</resultMap>	
+	
+	<select id="obtenerHospitales" resultMap="hospitalResult">
+		select * from "HOSPITAL" AND "ACTIVO_HOSP"=true order by "NOMBRE_HOSP" ASC;
+	</select>
+	
+	<select id="obtenerHospitalById" parameterType="Hospital" resultMap="hospitalResult">
+		select * from "HOSPITAL" WHERE "ID_HOSP"=#{idHospital}
+	</select>
+	
+	
+	<select id="obtenerHospitalesByIdImplant" parameterType="int" resultMap="hospitalResult">
+		SELECT "HOSP"."ID_HOSP", "HOSP"."NOMBRE_HOSP", "HOSP"."DIR_HOSP", "HOSP"."COL_HOSP", "HOSP"."MUN_DEL_HOSP", 
+        "HOSP"."ESTADO_HOSP", "HOSP"."CP_HOSP", "HOSP"."CONMUTADOR_HOSP", "HOSP"."ACTIVO_HOSP", "HOSP"."TEL_DIR_MOD_HOSP"
+  		FROM "HOSPITAL" AS "HOSP" INNER JOIN "IMPLANT_HOSP" AS "IH" ON "HOSP"."ID_HOSP"="IH"."ID_HOSP" AND "IH"."ID_IMPLANT"=#{id} 
+  			AND "HOSP"."ACTIVO_HOSP"=true order by "NOMBRE_HOSP" ASC;
+	</select>
+	
+	<select id="obtenerHospitalesSinPermisoByImplant" parameterType="int" resultMap="hospitalResult">
+		  SELECT * FROM "HOSPITAL" WHERE "ID_HOSP" NOT IN(SELECT "HOSP"."ID_HOSP" 
+		  	FROM "HOSPITAL" AS "HOSP" INNER JOIN "IMPLANT_HOSP" AS "IH" ON "HOSP"."ID_HOSP"="IH"."ID_HOSP" AND "IH"."ID_IMPLANT"=#{id})
+		  	AND "ACTIVO_HOSP"=true order by "NOMBRE_HOSP" ASC;
+	</select>
+	
+	<select id="obtenerHospitalesActivos" resultMap="hospitalResult">
+		select * from "HOSPITAL" where "ACTIVO_HOSP"=true order by "NOMBRE_HOSP" ASC;
+	</select>
+	
+	<insert id="agregarHospital" parameterType="Hospital" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_hospital')
+  		</selectKey>
+	  	INSERT INTO "HOSPITAL"(
+            "ID_HOSP", "NOMBRE_HOSP", "DIR_HOSP", "COL_HOSP", "MUN_DEL_HOSP", 
+            "ESTADO_HOSP", "CP_HOSP", "CONMUTADOR_HOSP","TEL_DIR_MOD_HOSP","CIUDAD_HOSP","PAIS_HOSP", "ACTIVO_HOSP")
+    		VALUES (#{id}, #{nombreHospital}, #{direccionHospital}, #{coloniaHospital}, #{municipioDelHospital}, #{estadoHospital}, 
+            #{cpHospital}, #{conmutadorHospital},#{telModuloHospital},#{ciudadHospital},#{paisHospital},#{activoHospital});  	
+	</insert>
+	<update id="actualizarHospital" parameterType="Hospital">		 	
+		UPDATE "HOSPITAL"
+   		SET "NOMBRE_HOSP"= #{nombreHospital}, "DIR_HOSP"=#{direccionHospital},   		
+   		"COL_HOSP"=#{coloniaHospital}, "MUN_DEL_HOSP"=#{municipioDelHospital},    		
+        "ESTADO_HOSP"=#{estadoHospital}, "CP_HOSP"=#{cpHospital}, "CONMUTADOR_HOSP"=#{conmutadorHospital},"TEL_DIR_MOD_HOSP"=#{telModuloHospital}
+       	WHERE "ID_HOSP"=#{idHospital} 			 			 			
+	</update>
+	
+	<update id="eliminarHospital" parameterType="Hospital">
+		UPDATE "HOSPITAL" SET "ACTIVO_HOSP"=#{activoHospital}
+ 			WHERE "ID_HOSP"=#{idHospital};
+	</update>
+</mapper>

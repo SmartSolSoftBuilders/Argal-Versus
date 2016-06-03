@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	   http://www.springframework.org/schema/cache 
+	   http://www.springframework.org/schema/cache/spring-cache.xsd       
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- Se buscará dentro de este paquete y sus subpaquetes beans con algún estereotipo para crearlos como beans.
+		La declaración de esta etiqueta tambien activa todo lo incluido por context:annotation-config -->
+	<context:component-scan base-package="mx.argal.servicios"/>
+	<!-- Activamos la creación de aspectos que usen @AspectJ -->
+	<aop:aspectj-autoproxy />
+	
+	<cache:annotation-driven cache-manager="cacheManagerServicios" />
+	
+	<bean id="cacheManagerServicios" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehcache"/>
+	</bean>
+	
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:mx/argal/servicios/config/ehcache.xml"/>
+    </bean>
+    	
+	<!--  bean id="serviciosSistemaArchivos" class="mx.sep.sajja.servicios.SistemaArchivosServicioImpl">
+		<constructor-arg value="file:/tmp/sajja/" />
+		<constructor-arg>
+			<map>
+				<entry key="juiciosAbiertos" value="juicios/abiertos/"></entry>
+				<entry key="juiciosCerrados" value="juicios/cerrados/"></entry>
+				<entry key="personal" value="archivo/personal/"></entry>
+			</map>		
+		</constructor-arg>
+	</bean-->
+	
+</beans>

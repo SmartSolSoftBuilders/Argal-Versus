@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="estrategas-fam-web">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="argal-servicios-0.0.1-SNAPSHOT-servicios.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/argal-servicios/argal-servicios">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="argal-datos-0.0.1-SNAPSHOT-datos.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/argal-datos/argal-datos">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="argal-modelo-0.0.1-SNAPSHOT-modelo.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/argal-modelo/argal-modelo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="argal-seguridad-1.0.0-seguridad.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/argal-seguridad/argal-seguridad">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/estrategas-fam-web/target/classes"/>
+        <property name="context-root" value="argal-web"/>
+    </wb-module>
+</project-modules>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mx.argal.dao.UsuarioDao">
+
+	<resultMap type="Usuario" id="usuarioResult">
+		<id property="idUsuario" column="ID_USUARIO"/>
+		<result property="nickUsuario" column="NICK_USUARIO"/>
+		<result property="passwordUsuario" column="PASSWORD_USUARIO"/>		
+	</resultMap>
+
+	<select id="obtenerUsuario" resultMap="usuarioResult">
+		select * from USUARIO;
+	</select>
+	
+</mapper>

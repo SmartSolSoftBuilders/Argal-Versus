@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mx.argal.dao.TipoEventoDao">
+
+	<resultMap type="TipoEvento" id="tipoEventoResult">
+		<id property="idTipoEvento" column="ID_TIPO_EVENTO"/>
+		<result property="descripcion" column="DESCRIPCION"/>		
+	</resultMap>	
+	
+	<select id="obtenerTiposEvento" resultMap="tipoEventoResult">
+		select * from "TIPO_EVENTO";
+	</select>
+	
+</mapper>

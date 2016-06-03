@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mx.argal.dao.ClienteDao">
+
+	<resultMap type="Cliente" id="clienteResult">
+		<id property="idCliente" column="ID_CLIENTE"/>
+		<result property="razonSocialCliente" column="RAZON_SOCIAL_CLIENTE"/>
+		<result property="domicilioCliente" column="DOMICILIO_CLIENTE"/>
+		<result property="conmutadorCliente" column="CONMUTADOR_CLIENTE"/>				
+		<result property="directorMedicoCliente" column="DIRECTOR_MEDICO_CLIENTE"/>				
+		<result property="nombreCliente" column="NOMBRE_CLIENTE"/>
+		<result property="telOfiCliente" column="TEL_OFICINA_CLIENTE"/>		
+		<result property="telCelCliente" column="TEL_CELULAR_CLIENTE"/>
+		<result property="emailCliente" column="EMAIL_CLIENTE"/>		
+		<result property="activoCliente" column="ACTIVO_CLIENTE"/>
+		<result property="nickCliente" column="NICK_CLIENTE"/>
+		<result property="nombreCorto" column="NOMBRE_CORTO"/>
+	</resultMap>	
+	
+	<select id="obtenerClientes" resultMap="clienteResult">
+		select * from "CLIENTE";
+	</select>
+	
+	<select id="obtenerClienteByNick" resultMap="clienteResult">
+		select * from "CLIENTE" where "NICK_CLIENTE"=#{nickCliente};
+	</select>
+	
+	<select id="obtenerClienteByIdCliente" resultMap="clienteResult">
+		select * from "CLIENTE" where "ID_CLIENTE"=#{idCliente};
+	</select>
+	
+	<select id="obtenerClientesActivos" resultMap="clienteResult">
+		select * from "CLIENTE" where "ACTIVO_CLIENTE"=true;
+	</select>
+	
+	<insert id="agregarCliente" parameterType="Cliente" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_cliente')
+  		</selectKey>
+  		INSERT INTO "CLIENTE"(
+	      "ID_CLIENTE","RAZON_SOCIAL_CLIENTE", "DOMICILIO_CLIENTE", 
+          "CONMUTADOR_CLIENTE", "DIRECTOR_MEDICO_CLIENTE", "NOMBRE_CLIENTE", 
+          "TEL_OFICINA_CLIENTE", "TEL_CELULAR_CLIENTE", "EMAIL_CLIENTE","ACTIVO_CLIENTE","NOMBRE_CORTO")
+	      VALUES (#{id},#{razonSocialCliente},#{domicilioCliente},#{conmutadorCliente},#{directorMedicoCliente},
+  	      #{nombreCliente},#{telOfiCliente},#{telCelCliente},#{emailCliente},#{activoCliente},#{nombreCorto})
+	</insert>
+	
+	<update id="eliminarCliente" parameterType="Cliente">
+		UPDATE "CLIENTE" SET "ACTIVO_CLIENTE"=#{activoCliente}
+ 			WHERE "ID_CLIENTE"=#{idCliente};
+	</update>
+	
+	<update id="actualizarCliente" parameterType="Cliente">	
+		UPDATE "CLIENTE"
+   		SET "RAZON_SOCIAL_CLIENTE"=#{razonSocialCliente}, 
+        "DOMICILIO_CLIENTE"=#{domicilioCliente}, "CONMUTADOR_CLIENTE"=#{conmutadorCliente}, "DIRECTOR_MEDICO_CLIENTE"=#{directorMedicoCliente}, 
+        "NOMBRE_CLIENTE"=#{nombreCliente}, "TEL_OFICINA_CLIENTE"=#{telOfiCliente}, "TEL_CELULAR_CLIENTE"=#{telCelCliente},  
+        "EMAIL_CLIENTE"=#{emailCliente},"NOMBRE_CORTO"=#{nombreCorto}
+       	WHERE "ID_CLIENTE"=#{idCliente} 			 			 			
+	</update>		
+	
+</mapper>

@@ -1,0 +1,170 @@
+/*html5 semantics tags */
+article, aside, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+	font-family: Helvetica,Arial;	
+}
+
+/* light css reset */
+* { margin : 0; padding : 0; }
+h2, h3, h4, h5, p, ul, ol  { margin : 0 20px; padding : .5em 0; }
+img { border: 0px;}
+
+/* =page level container */
+#pageContainer {
+    margin: 0px auto 0px auto;
+	width: 1000px;
+}
+
+#pageHeader {
+    margin:0px auto 0px 20%;
+    width:960px;
+    height:82px;
+    position:relative;
+    background:#46C2BC;
+    color:white;        
+    font-family: Helvetica,Arial;
+}
+#contentContainer {
+    margin: 0	px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    min-height: 800px;
+    background:white;
+    color:#6688a6;    
+    font-family: Helvetica,Arial;    
+}
+
+#pageFooter {
+    margin: 0px auto;
+    padding-bottom: 20px;
+	width: 960px;
+	position: relative;
+	background:#46C2BC;
+}
+
+/* Clear Floated Elements */
+.clearfix:before, .clearfix:after {content: "\0020"; 
+	display: block; height: 0; visibility: hidden;}
+.clearfix:after { 
+	clear: both; 
+}
+
+.clearfix { 
+	zoom: 1; 
+}
+
+#formularioTabla{
+	/*estilo de nuestra lista*/
+	font-family: "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+	size: 16px;
+	
+}
+#menu{
+	/*estilo de nuestra lista*/
+	background-color:#46C2BC;
+	list-style:none;
+	width:auto;
+	position:relative;
+	display:block;
+	height:36px;
+}
+
+#menu li{
+	/*estilo a cada uno de los elementos(li) de nuestro menu*/
+	float:left;/* propiedad importante para que nuestro menu tome la forma horizontal*/
+	display:block;
+	position:relative;
+}
+#menu li a{
+	/*estilo de los enlaces */
+	color:#fff;
+	text-decoration:none;
+	font-family:Helvetica, Arial, sans-serif;
+	font-size:14px;
+	line-height:1.3em;
+	padding:10px 14px 8px 16px;
+	display:block;
+}
+#menu li ul{
+	/*estilo de los submenus*/
+	width:120px;
+	background:#005580;
+	color:white;
+	border:1px #ccc solid;
+	display:none; /*importante para que los submenus no estén visibles*/
+	position:absolute;
+	z-index:999;
+	margin-top:0px;
+}
+#menu li ul li{
+	/*estilo a cada uno de los elementos(li) de nuestro submenu*/
+	width:100%;
+	color:white;
+	list-style:none;
+	display:block;
+}
+#menu li ul li a{
+	/*estilo a cada uno de los enlaces de nuestro submenu*/
+	color:white;
+	font-size:14px;
+	line-height:1.3em;
+	display:block;
+	font-weight:normal;
+	padding:8px
+}
+#menu li ul li a:hover{
+	/*un poco de decoracion a los enlaces de nuestro submenu al estar el cursor sobre ellos con ayuda de el selector :hover */
+	background-color:#FFF;
+	color:#444;
+	text-decoration:underline;
+}
+
+#menu li:hover ul{
+	/*con este selector definimos que cuando el cursor este sobre un elemento(li) que contenga un elemento(ul) dentro le asigne la propiedad display:block; para que este a su vez pase de invisible a visible*/
+	display:block;
+}
+	
+label{
+	color:#019AD2;
+}	
+
+.myButton {
+	-moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	-webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #33bdef), color-stop(1, #019ad2));
+	background:-moz-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-webkit-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-o-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-ms-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bdef', endColorstr='#019ad2',GradientType=0);
+	background-color:#33bdef;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #057fd0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #5b6178;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #019ad2), color-stop(1, #33bdef));
+	background:-moz-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-webkit-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-o-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-ms-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#019ad2', endColorstr='#33bdef',GradientType=0);
+	background-color:#019ad2;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}

@@ -1,0 +1,96 @@
+[
+    {
+        "id": 1,
+        "estado": "DISTRITO FEDERAL"
+    },    {
+        "id": 2,
+        "estado": "AGUASCALIENTES"         
+    },    {
+        "id": 3,
+        "estado": "BAJA CALIFORNIA SUR"         
+    },    {
+        "id": 4,
+        "estado": "BAJA CALIFORNIA NORTE"    
+    },    {
+        "id": 5,
+        "estado": "CAMPECHE"         
+    },    {
+        "id": 6,
+        "estado": "COAHUILA"     
+    },    {
+        "id": 7,
+        "estado": "COLIMA"         
+    },    {
+        "id": 8,
+        "estado": "CHIAPAS"         
+    },    {
+        "id": 9,
+        "estado": "CHIHUAHUA"         
+    },    {
+        "id": 10,
+        "estado": "DURANGO"      
+    },    {
+        "id": 11,
+        "estado": "ESTADO DE MEXICO"         
+    },    {
+        "id": 12,
+        "estado": "GUANAJUATO"         
+    },    {
+        "id": 13,
+        "estado": "GUERRERO"         
+    },    {
+        "id": 14,
+        "estado": "HIDALGO"         
+    },    {
+        "id": 15,
+        "estado": "JALISCO"         
+    },    {
+        "id": 16,
+        "estado": "MICHOACAN"         
+    },    {
+        "id": 17,
+        "estado": "MORELOS"         
+    },    {
+        "id": 18,
+        "estado": "NAYARIT"         
+    },    {
+        "id": 19,
+        "estado": "NUEVO LEON"         
+    },    {
+        "id": 20,
+        "estado": "OAXACA"         
+    },    {
+        "id": 21,
+        "estado": "PUEBLA"       
+    },    {
+        "id": 22,
+        "estado": "QUERETARO"         
+    },    {
+        "id": 23,
+        "estado": "QUINTANAROO"         
+    },    {
+        "id": 24,
+        "estado": "SAN LUIS POTOSI"         
+    },    {
+        "id": 25,
+        "estado": "SINALOA"         
+    },    {
+        "id": 26,
+        "estado": "SONORA"         
+    },    {
+        "id": 27,
+        "estado": "TABASCO"         
+    },    {
+        "id": 28,
+        "estado": "TAMAULIPAS"      
+    },    {
+        "id": 29,
+        "estado": "TLAXCALA"         
+    },   {
+        "id": 32,
+        "estado": "YUCATAN"         
+    },  {
+        "id": 33,
+        "estado": "ZACATECAS"         
+    }   
+] 

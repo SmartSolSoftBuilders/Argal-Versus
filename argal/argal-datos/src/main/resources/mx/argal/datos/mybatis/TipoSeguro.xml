@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mx.argal.dao.TipoSeguroDao">
+
+	<resultMap type="TipoSeguro" id="tipoSeguroResult">
+		<id property="idTipoSeguro" column="ID_TIPO_SEGURO"/>
+		<result property="descripcion" column="DESCRIPCION"/>		
+	</resultMap>	
+	
+	<select id="obtenerTiposSeguro" resultMap="tipoSeguroResult">
+		select * from "TIPO_SEGURO";
+	</select>
+	
+</mapper>

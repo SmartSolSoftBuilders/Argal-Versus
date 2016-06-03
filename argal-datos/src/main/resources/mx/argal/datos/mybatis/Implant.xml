@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mx.argal.dao.ImplantDao">
+
+	<resultMap type="Implant" id="implantResult">
+		<id property="idImplant" column="ID_IMPLANT"/>
+		<result property="nombreImplant" column="NOMBRE_IMPLANT"/>
+		<result property="appImplant" column="APP_IMPLANT"/>
+		<result property="apmImplant" column="APM_IMPLANT"/>
+		<result property="nextelImplant" column="NEXTEL_IMPLANT"/>
+		<result property="idNextelImplant" column="ID_NEXTEL"/>
+		<result property="celularImplant" column="CELULAR_IMPLANT"/>
+		<result property="telOfiImplant" column="TEL_OFI_IMPL"/>		
+		<result property="puestoImplant" column="PUESTO_IMPLANT"/>
+		<result property="emailInstImplant" column="EMAIL_INST_IMPLANT"/>
+		<result property="emailPersImplant" column="EMAIL_PERS_IMPLANT"/>
+		<result property="superMedico" column="SUPER_MEDICO"/>
+		<result property="activoImplant" column="ACTIVO_IMPLANT"/>		
+		<result property="nickImplant" column="NICK_IMPLANT"/>
+		<collection property="hospitalesConPermisos" column="ID_IMPLANT"
+	        javaType="List" ofType="Hospital" select="selectHospPermisosImplant"/>    
+	</resultMap> 
+	
+	<resultMap type="Hospital" id="hospitalResult">		
+		<id property="idHospital" column="ID_HOSP"/>
+		<result property="nombreHospital" column="NOMBRE_HOSP"/>	
+	</resultMap>
+	
+	<select id="obtenerImplantById" parameterType="int" resultMap="implantResult">
+		SELECT * from "IMPLANT" WHERE "ID_IMPLANT"=#{id}
+	</select>
+	
+	<select id="obtenerImplantByNick" parameterType="Implant" resultMap="implantResult">
+		SELECT * from "IMPLANT" WHERE "NICK_IMPLANT"=#{nickImplant}
+	</select>
+
+	<select id="selectHospPermisosImplant" parameterType="Implant" resultMap="hospitalResult">
+		SELECT "HOSP"."ID_HOSP", "HOSP"."NOMBRE_HOSP" 
+		FROM "HOSPITAL" "HOSP" INNER JOIN "IMPLANT_HOSP" "IH" 
+		ON "HOSP"."ID_HOSP"="IH"."ID_HOSP" AND "IH"."ID_IMPLANT"=#{idImplant}
+	</select>
+	
+	<select id="obtenerImplants" resultMap="implantResult">
+		select * from "IMPLANT";
+	</select>
+	
+	<select id="obtenerImplantsActivos" resultMap="implantResult">
+		select * from "IMPLANT" where "ACTIVO_IMPLANT"=true;
+	</select>
+	
+	<insert id="agregarImplant" parameterType="Implant" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_implant')
+  		</selectKey>
+  	INSERT INTO "IMPLANT"(
+            "ID_IMPLANT", "NOMBRE_IMPLANT", "APP_IMPLANT", "APM_IMPLANT", 
+            "NEXTEL_IMPLANT", "ID_NEXTEL", "CELULAR_IMPLANT", "TEL_OFI_IMPL", 
+            "PUESTO_IMPLANT", "EMAIL_INST_IMPLANT", "EMAIL_PERS_IMPLANT", 
+            "SUPER_MEDICO", "ACTIVO_IMPLANT","NICK_IMPLANT")
+		    VALUES (#{id},#{nombreImplant},#{appImplant},#{apmImplant},#{nextelImplant},#{idNextelImplant},
+		    #{celularImplant},#{telOfiImplant},#{puestoImplant},#{emailInstImplant},#{emailPersImplant},#{superMedico},#{activoImplant},#{nickImplant})
+	</insert>
+		
+	<insert id="agregarPermisoHospImplant" parameterType="Implant">	
+		INSERT INTO "IMPLANT_HOSP"(
+            	"ID_IMPLANT", "ID_HOSP")
+    	<foreach  collection="hospitalesConPermisos" item="hosp">        	
+	    	VALUES (#{idImplant}, #{hosp.idHospital});
+	    </foreach>		
+	</insert>
+	
+	<delete id="eliminarPermisoHospImplant" parameterType="Implant">	
+		DELETE FROM "IMPLANT_HOSP"
+    	<foreach  collection="hospitalesConPermisos" item="hosp">        	
+	    	WHERE "ID_IMPLANT"=#{idImplant} AND "ID_HOSP"=#{hosp.idHospital};
+	    </foreach>		
+	</delete>
+	
+	<update id="eliminarImplant" parameterType="Implant">
+		UPDATE "IMPLANT" SET "ACTIVO_IMPLANT"=#{activoImplant}
+ 			WHERE "ID_IMPLANT"=#{idImplant};
+	</update>
+	
+	<update id="actualizarImplant" parameterType="Implant">	
+		UPDATE "IMPLANT" SET "NOMBRE_IMPLANT"=#{nombreImplant}, 
+		"APP_IMPLANT"=#{appImplant}, "APM_IMPLANT"=#{apmImplant}, 
+        "NEXTEL_IMPLANT"=#{nextelImplant},"SUPER_MEDICO"=#{superMedico},
+        "ID_NEXTEL"=#{idNextelImplant}, "CELULAR_IMPLANT"=#{celularImplant}, "TEL_OFI_IMPL"=#{telOfiImplant},
+        "PUESTO_IMPLANT"=#{puestoImplant}, "EMAIL_INST_IMPLANT"=#{emailInstImplant}, "EMAIL_PERS_IMPLANT"=#{emailPersImplant} 
+           
+       	WHERE "ID_IMPLANT"=#{idImplant} 			 			 			
+	</update>
+	<update id="actualizarNickImplant" parameterType="Implant">
+		UPDATE "IMPLANT" SET "NICK_IMPLANT"=#{nickImplant}
+       	WHERE "ID_IMPLANT"=#{idImplant} 			 			 			
+	</update>
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mx.argal.dao.ListaPreciosDao">
+	<resultMap type="ListaPrecios" id="listaPreciosResult">
+		<id property="idListaPrecios" column="ID_LISTA_PRECIOS"/>
+		<result property="archivo" column="ARCHIVO" javaType = "byte[]" jdbcType = "BINARY" typeHandler = "org.apache.ibatis.type.ByteArrayTypeHandler" />							
+		<result property="jubilados" column="JUBILADOS"/> 
+		<result property="rutaLista" column="TIPO_LISTA"/>
+		<association property="cliente" column="ID_CLIENTE" javaType="Implant" select="obtenerClientes"/>
+		<association property="hospital" column="ID_HOSP" javaType="Implant" select="obtenerHospitales"/>										
+	</resultMap>
+	
+	<resultMap type="Hospital" id="hospitalResult">
+		<id property="idHospital" column="ID_HOSP"/>	
+	</resultMap>
+	
+	<resultMap type="Cliente" id="clienteResult">
+		<id property="idCliente" column="ID_CLIENTE"/>		
+	</resultMap>	
+			
+	<select id="obtenerListasPrecios" resultMap="listaPreciosResult">
+		select * from "LISTA_PRECIOS";
+	</select>
+	<select id="obtenerHospitales" resultMap="hospitalResult">
+		select * from "HOSPITAL" where "ID_HOSP"=#{hospital.idHospital};
+	</select>		
+	<select id="obtenerClientes" resultMap="clienteResult">
+		select * from "CLIENTE" where "ID_CLIENTE"=#{cliente.idCliente};
+	</select>	           
+	
+	<select id="obtenerListasPreciosByParams" parameterType="ListaPrecios" resultMap="listaPreciosResult">
+		select * from "LISTA_PRECIOS" where "ID_HOSP"=#{hospital.idHospital} AND "ID_CLIENTE"=#{cliente.idCliente};
+	</select>
+
+	<select id="obtenerListasPreciosByIdHospIdCliente" parameterType="ListaPrecios" resultType="int">
+		select "ID_LISTA_PRECIOS" from "LISTA_PRECIOS" where "ID_HOSP"=#{hospital.idHospital} AND "ID_CLIENTE"=#{cliente.idCliente} AND "JUBILADOS"=#{jubilados};
+	</select>
+	
+	<select id="obtenerListasPreciosById" parameterType="ListaPrecios" resultMap="listaPreciosResult">
+		select * from "LISTA_PRECIOS" where "ID_LISTA_PRECIOS"=#{idListaPrecios};
+	</select>		
+	<insert id="agregarListaPrecios" parameterType="ListaPrecios" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  		   	SELECT nextVal('sec_lista_precios')
+  		</selectKey>
+  		INSERT INTO "LISTA_PRECIOS"(
+            "ID_LISTA_PRECIOS", "ID_HOSP", "ID_CLIENTE", "JUBILADOS","TIPO_LISTA")                 
+           		 VALUES (#{id}, #{hospital.idHospital},#{cliente.idCliente},#{jubilados},
+	            #{rutaLista}
+           );                
+    </insert>
+    <delete id="eliminarListaPrecios" parameterType="ListaPrecios">
+    	DELETE FROM "LISTA_PRECIOS" WHERE "ID_LISTA_PRECIOS"=#{idListaPrecios};
+    </delete>
+	<update id="agregarFileLista" parameterType="ListaPrecios">
+    	UPDATE "LISTA_PRECIOS" SET "TIPO_LISTA"=#{rutaLista}, "ARCHIVO"=
+    	#{archivo,javaType=byte[],jdbcType=BINARY,typeHandler=org.apache.ibatis.type.ByteArrayTypeHandler} 
+    	WHERE "ID_LISTA_PRECIOS"=#{idListaPrecios};
+    </update>
+    
+</mapper>
