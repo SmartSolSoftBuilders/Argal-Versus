@@ -1,4 +1,4 @@
-//smartcommit
+//smartcommit ok
 package mx.argal.versus.web.controller;
 
 

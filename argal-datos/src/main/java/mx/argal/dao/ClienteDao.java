@@ -13,6 +13,6 @@ public interface ClienteDao {
 	void agregarCliente(Cliente Cliente);
 	public void actualizarCliente(Cliente Cliente);
 	public boolean eliminarCliente(Cliente Cliente);
-	//Borrar
+	//Borrar //borrar
 	public Cliente obtenerClienteByIdCliente(Cliente cliente);
 }
