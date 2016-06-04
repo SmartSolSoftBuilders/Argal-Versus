@@ -1,0 +1,1133 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: ANTECEDENTES; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "ANTECEDENTES" (
+    "ID_ANTECEDENTE" integer NOT NULL,
+    "DESCRIPCION" character varying(65)
+);
+
+
+ALTER TABLE public."ANTECEDENTES" OWNER TO smart;
+
+--
+-- Name: BITACORA_MEDICA; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "BITACORA_MEDICA" (
+    "ID_BITACORA_MEDICA" integer NOT NULL,
+    "ID_REGISTRO" integer NOT NULL,
+    "OBSERVACIONES" character varying(256),
+    "ID_EVENTO" integer NOT NULL,
+    "FECHA_BITACORA" date,
+    "DESCRIPCION_BITACORA" character varying(40),
+    "INTERCONSULTA" character varying(40)
+);
+
+
+ALTER TABLE public."BITACORA_MEDICA" OWNER TO postgres;
+
+--
+-- Name: CLIENTE; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "CLIENTE" (
+    "ID_CLIENTE" integer NOT NULL,
+    "ACTIVO_CLIENTE" boolean,
+    "RAZON_SOCIAL_CLIENTE" character varying(120),
+    "DOMICILIO_CLIENTE" character varying(80),
+    "CONMUTADOR_CLIENTE" character varying(50),
+    "DIRECTOR_MEDICO_CLIENTE" character varying(90),
+    "NOMBRE_CLIENTE" character varying(90),
+    "TEL_OFICINA_CLIENTE" character varying(45),
+    "TEL_CELULAR_CLIENTE" character varying(45),
+    "EMAIL_CLIENTE" character varying(50),
+    "NICK_CLIENTE" character varying(45),
+    "NOMBRE_CORTO" character varying(35)
+);
+
+
+ALTER TABLE public."CLIENTE" OWNER TO smart;
+
+--
+-- Name: CPT; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "CPT" (
+    "ID_CPT" integer NOT NULL,
+    "DESCRIPCION" character varying(125),
+    "ES_CATALOGO" boolean,
+    "CVE_CPT" character varying(30)
+);
+
+
+ALTER TABLE public."CPT" OWNER TO smart;
+
+--
+-- Name: ESPECIALIDAD; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "ESPECIALIDAD" (
+    "ID_ESPECIALIDAD" integer NOT NULL,
+    "DESCRIPCION" character varying(40)
+);
+
+
+ALTER TABLE public."ESPECIALIDAD" OWNER TO smart;
+
+--
+-- Name: ESPECIALIDAD_MEDICO_TRATANTE; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "ESPECIALIDAD_MEDICO_TRATANTE" (
+    "ID_MEDICO_TRATANTE" integer NOT NULL,
+    "ID_ESPECIALIDAD" integer NOT NULL
+);
+
+
+ALTER TABLE public."ESPECIALIDAD_MEDICO_TRATANTE" OWNER TO postgres;
+
+--
+-- Name: EVENTO; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "EVENTO" (
+    "ID_EVENTO" integer NOT NULL,
+    "ID_IMPLANT" integer NOT NULL,
+    "ID_HOSP" integer NOT NULL,
+    "FECHA_INGRESO" date NOT NULL,
+    "FECHA_CAPTURA" date NOT NULL,
+    "ID_CLIENTE" integer NOT NULL,
+    "ID_TIPO_SEGURO" integer,
+    "ID_TIPO_EVENTO" integer,
+    "ID_DIAGN_INGRESO_1" integer,
+    "ID_ANTECEDENTES" integer,
+    "ID_PROCEDIMIENTO" integer,
+    "ID_TIPO_TRATAMIENTO_QUIRURGICO" integer,
+    "NUM_HABITACION" character varying(45),
+    "ID_MEDICO_TRATANTE" integer,
+    "ID_DIAGN_INGRESO_2" integer,
+    "FECHA_EGRESO" date,
+    "ID_DIAGN_EGRESO_1" integer,
+    "ID_PROCEDIMIENTO_1" integer,
+    "ID_PROCEDIMIENTO_2" integer,
+    "EVENTOS_NO_DESEAB_ENT_HOSP" character varying(120),
+    "MOTIVO_EGRESO" character varying(50),
+    "MONTO_ANTES_DESVIOS2" character varying(10),
+    "MONTO_DESPUES_DESVIOS" character varying(10),
+    "DESC_HOSPITAL" character varying(10),
+    "DIF_FACT_MENOS_DESVIOS" character varying(15),
+    "DESCUENTO_NO_APLICADO" character varying(15),
+    "CARGOS_PERSONALES" character varying(15),
+    "TOTAL_DESVIOS" character varying(15) DEFAULT 0,
+    "AJUSTE_FACTURA" character varying(15),
+    "TIPO_COMPROBANTE_FISCAL_COR" character varying(25),
+    "FOLIO_COMPROB_FISCAL_COR" character varying(25),
+    "STATUS_EVENTO" integer,
+    "COMENTARIOS_DIF_FACTURACION" character varying(150),
+    "FOLIO_ARGAL" character varying(40),
+    "FOLIO_HOSP" character varying(40),
+    "IVA_FINALIZAR_EVENTO" double precision DEFAULT 0,
+    "COASEGURO_FINALIZAR_EVENTO" double precision DEFAULT 0,
+    "DEDUCIBLE_FINALIZAR_EVENTO" double precision,
+    "DESCUENTO_HOSP_FINALIZAR_EVENTO" double precision DEFAULT 0,
+    "HORA_INGRESO" time without time zone,
+    "MEDICO_DICTAMINADOR" character varying(80),
+    "FECHA_DEF" date,
+    "HORA_DEF" time without time zone,
+    "CAUSA_DIRECTA_DEF" character varying(250),
+    "DIAS_INCAPACIDAD" integer DEFAULT 0,
+    "HORA_EGRESO" time without time zone,
+    "HORA_EGRESO_CAPT" time without time zone,
+    "FECHA_EGRESO_CAPT" date,
+    "TOTAL_DESVIOS_COMPROBADOS" double precision DEFAULT 0,
+    "NUM_FACTURAS_APROBADAS" integer DEFAULT 0,
+    "NUM_FACTURAS_RECHAZADAS" integer DEFAULT 0,
+    "MONTO_DESVIOS_FACTURACION" double precision DEFAULT 0,
+    "MONTO_AJUSTE_FACTURACION" double precision DEFAULT 0,
+    "MONTO_FACTURACION_CORREGIDO" double precision DEFAULT 0,
+    "MONTO_FINAL_FACTURACION" double precision DEFAULT 0,
+    "MONTO_ANTES_DESVIOS" double precision DEFAULT 0
+);
+
+
+ALTER TABLE public."EVENTO" OWNER TO smart;
+
+--
+-- Name: FACTURA; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "FACTURA" (
+    "ID_FACTURA" integer NOT NULL,
+    "APROBADA" character varying(15),
+    "DETALLE" character varying(250),
+    "OBSERVACIONES" character varying(200),
+    "RUTA_FACTURA" character varying(100),
+    "ID_EVENTO" integer,
+    "MONTO" double precision,
+    "NUM_FACTURA" character varying(60),
+    "AJUSTE_FACTURA" double precision DEFAULT 0,
+    "MONTO_CFC" double precision DEFAULT 0,
+    "TIPO_CFC" character varying(40),
+    "FOLIO_CFC" character varying(40),
+    "ARCHIVO" bytea
+);
+
+
+ALTER TABLE public."FACTURA" OWNER TO postgres;
+
+--
+-- Name: GASTO_EVENTO; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "GASTO_EVENTO" (
+    "ID_GASTO_EVENTO" integer NOT NULL,
+    "ID_EVENTO" integer NOT NULL,
+    "ID_TIPO_CARGO" integer NOT NULL,
+    "ID_AREA" integer NOT NULL,
+    "ID_RUBRO" integer NOT NULL,
+    "ID_RAZON" integer NOT NULL,
+    "FECHA_INGRESO" date NOT NULL,
+    "NOMBRE" character varying(120) NOT NULL,
+    "MONTO_UNITARIO" character varying(120) NOT NULL,
+    "CANTIDAD" character varying(120) NOT NULL,
+    "TIPO_EVIDENCIA" character varying(120),
+    "ARCHIVO" bytea
+);
+
+
+ALTER TABLE public."GASTO_EVENTO" OWNER TO postgres;
+
+--
+-- Name: HOSPITAL; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "HOSPITAL" (
+    "ID_HOSP" integer NOT NULL,
+    "NOMBRE_HOSP" character varying(55),
+    "DIR_HOSP" character varying(90),
+    "COL_HOSP" character varying(45),
+    "MUN_DEL_HOSP" character varying(45),
+    "ESTADO_HOSP" character varying(45),
+    "CP_HOSP" character varying(45),
+    "CONMUTADOR_HOSP" character varying(45),
+    "ACTIVO_HOSP" boolean,
+    "TEL_DIR_MOD_HOSP" character varying(45),
+    "PAIS_HOSP" character varying(45),
+    "CIUDAD_HOSP" character varying(45)
+);
+
+
+ALTER TABLE public."HOSPITAL" OWNER TO smart;
+
+--
+-- Name: ICD; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "ICD" (
+    "ID_ICD" integer NOT NULL,
+    "DESCRIPCION" character varying(125),
+    "ES_CATALOGO" boolean,
+    "CVE_ICD" character varying(25)
+);
+
+
+ALTER TABLE public."ICD" OWNER TO smart;
+
+--
+-- Name: IMPLANT; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "IMPLANT" (
+    "ID_IMPLANT" integer NOT NULL,
+    "NOMBRE_IMPLANT" character varying(45),
+    "APP_IMPLANT" character varying(45),
+    "APM_IMPLANT" character varying(45),
+    "NEXTEL_IMPLANT" character varying(45),
+    "ID_NEXTEL" character varying(45),
+    "CELULAR_IMPLANT" character varying(45),
+    "TEL_OFI_IMPL" character varying(45),
+    "PUESTO_IMPLANT" character varying(45),
+    "EMAIL_INST_IMPLANT" character varying(55),
+    "EMAIL_PERS_IMPLANT" character varying(55),
+    "SUPER_MEDICO" boolean,
+    "ACTIVO_IMPLANT" boolean,
+    "NICK_IMPLANT" character varying(45)
+);
+
+
+ALTER TABLE public."IMPLANT" OWNER TO postgres;
+
+--
+-- Name: IMPLANT_HOSP; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "IMPLANT_HOSP" (
+    "ID_IMPLANT" integer NOT NULL,
+    "ID_HOSP" integer NOT NULL
+);
+
+
+ALTER TABLE public."IMPLANT_HOSP" OWNER TO postgres;
+
+--
+-- Name: LISTA_PRECIOS; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "LISTA_PRECIOS" (
+    "ID_LISTA_PRECIOS" integer NOT NULL,
+    "ID_HOSP" integer,
+    "ID_CLIENTE" integer,
+    "ARCHIVO" bytea,
+    "JUBILADOS" boolean,
+    "TIPO_LISTA" character varying
+);
+
+
+ALTER TABLE public."LISTA_PRECIOS" OWNER TO postgres;
+
+--
+-- Name: MEDICO_TRATANTE; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "MEDICO_TRATANTE" (
+    "ID_MEDICO_TRATANTE" integer NOT NULL,
+    "NOMBRE" character varying(120),
+    "ID_ESPECIALIDAD_MEDICO_TRATANTE" integer,
+    "TIPO_MED" integer,
+    "ACTIVO" boolean DEFAULT true
+);
+
+
+ALTER TABLE public."MEDICO_TRATANTE" OWNER TO smart;
+
+--
+-- Name: REG_GASTOS_MAYORES; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "REG_GASTOS_MAYORES" (
+    "ID_REG_GASTOS_MAYORES" integer NOT NULL,
+    "ID_EVENTO" integer NOT NULL,
+    "NO_POLIZA" character varying(45),
+    "COASEGURO_MED" character varying(40),
+    "SUMA_ASEGURADA" character varying(20),
+    "MONTO_CARTA_AUT_INI" character varying(20),
+    "TAB_HONOR_MEDIC" character varying(20),
+    "NOMBRE_TITULAR" character varying(45),
+    "APP_TITULAR" character varying(45),
+    "APM_TITULAR" character varying(45),
+    "NOMBRE_PACIENTE" character varying(45),
+    "APP_PACIENTE" character varying(45),
+    "APM_PACIENTE" character varying(45),
+    "EDAD_PACIENTE" integer,
+    "UNIDAD_EDAD" character varying(10),
+    "SEXO_PACIENTE" character varying(10),
+    "CONDICION_PACIENTE" character varying(30),
+    "RELACION_PACIENTE" character varying(30),
+    "NAC_FECHA_NACIMIENTO" date,
+    "NAC_HORA_NACIMIENTO" time without time zone,
+    "NAC_TIPO_PARTO" character varying(30),
+    "NAC_TALLA" character varying(20),
+    "NAC_PESO" character varying(20),
+    "NAC_APGAR" character varying(10),
+    "NAC_SILVERMAN" character varying(15),
+    "NAC_MEDICO_TRATANTE" character varying(50),
+    "DEDUCIBLE_POLIZA" character varying(10) DEFAULT 0,
+    "CAPITA" character varying(10),
+    "CANTIDAD_CUB_CONVENIO" double precision DEFAULT 0
+);
+
+
+ALTER TABLE public."REG_GASTOS_MAYORES" OWNER TO postgres;
+
+--
+-- Name: REG_SEG_PERSONAL; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "REG_SEG_PERSONAL" (
+    "ID_REG_SEG_PERSONAL" integer NOT NULL,
+    "ID_EVENTO" integer NOT NULL,
+    "NUM_NOMINA" character varying(45),
+    "INSTITUCION" character varying(90),
+    "NOMBRE_TITULAR" character varying(45),
+    "APP_TITULAR" character varying(45),
+    "APM_TITULAR" character varying(45),
+    "NOMBRE_PACIENTE" character varying(45),
+    "APP_PACIENTE" character varying(45),
+    "APM_PACIENTE" character varying(45),
+    "EDAD_PACIENTE" integer,
+    "UNIDAD_EDAD" character varying(10),
+    "SEXO_PACIENTE" character varying(10),
+    "CONDICION_PACIENTE" character varying(30),
+    "RELACION_PACIENTE" character varying(30),
+    "NAC_FECHA_NACIMIENTO" date,
+    "NAC_HORA_NACIMIENTO" time without time zone,
+    "NAC_TIPO_PARTO" character varying(20),
+    "NAC_TALLA" character varying(20),
+    "NAC_PESO" character varying(20),
+    "NAC_APGAR" character varying(20),
+    "NAC_SILVERMAN" character varying(20),
+    "NAC_MEDICO_TRATANTE" character varying(50),
+    "NUM_AUTORIZACION" character varying(25),
+    "CENSO" character varying(2),
+    "CANTIDAD_CUB_CONVENIO" double precision,
+    "CAPITA" character varying(10)
+);
+
+
+ALTER TABLE public."REG_SEG_PERSONAL" OWNER TO postgres;
+
+--
+-- Name: TIPO_EVENTO; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "TIPO_EVENTO" (
+    "ID_TIPO_EVENTO" integer NOT NULL,
+    "DESCRIPCION" character varying(45)
+);
+
+
+ALTER TABLE public."TIPO_EVENTO" OWNER TO smart;
+
+--
+-- Name: TIPO_SEGURO; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE "TIPO_SEGURO" (
+    "ID_TIPO_SEGURO" integer NOT NULL,
+    "DESCRIPCION" character varying(45)
+);
+
+
+ALTER TABLE public."TIPO_SEGURO" OWNER TO smart;
+
+--
+-- Name: sec_bitacora; Type: SEQUENCE; Schema: public; Owner: smart
+--
+
+CREATE SEQUENCE sec_bitacora
+    START WITH 3130
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_bitacora OWNER TO smart;
+
+--
+-- Name: sec_cliente; Type: SEQUENCE; Schema: public; Owner: smart
+--
+
+CREATE SEQUENCE sec_cliente
+    START WITH 22
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_cliente OWNER TO smart;
+
+--
+-- Name: sec_evento; Type: SEQUENCE; Schema: public; Owner: smart
+--
+
+CREATE SEQUENCE sec_evento
+    START WITH 1245
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_evento OWNER TO smart;
+
+--
+-- Name: sec_factura; Type: SEQUENCE; Schema: public; Owner: smart
+--
+
+CREATE SEQUENCE sec_factura
+    START WITH 396
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_factura OWNER TO smart;
+
+--
+-- Name: sec_gasto; Type: SEQUENCE; Schema: public; Owner: smart
+--
+
+CREATE SEQUENCE sec_gasto
+    START WITH 3863
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_gasto OWNER TO smart;
+
+--
+-- Name: sec_hospital; Type: SEQUENCE; Schema: public; Owner: smart
+--
+
+CREATE SEQUENCE sec_hospital
+    START WITH 29
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_hospital OWNER TO smart;
+
+--
+-- Name: sec_implant; Type: SEQUENCE; Schema: public; Owner: smart
+--
+
+CREATE SEQUENCE sec_implant
+    START WITH 80
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_implant OWNER TO smart;
+
+--
+-- Name: sec_lista_precios; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE sec_lista_precios
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_lista_precios OWNER TO postgres;
+
+--
+-- Name: sec_med_tratante; Type: SEQUENCE; Schema: public; Owner: smart
+--
+
+CREATE SEQUENCE sec_med_tratante
+    START WITH 705
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_med_tratante OWNER TO smart;
+
+--
+-- Name: test; Type: TABLE; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE TABLE test (
+    id integer NOT NULL
+);
+
+
+ALTER TABLE public.test OWNER TO smart;
+
+--
+-- Name: test_id_seq; Type: SEQUENCE; Schema: public; Owner: smart
+--
+
+CREATE SEQUENCE test_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.test_id_seq OWNER TO smart;
+
+--
+-- Name: test_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: smart
+--
+
+ALTER SEQUENCE test_id_seq OWNED BY test.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY test ALTER COLUMN id SET DEFAULT nextval('test_id_seq'::regclass);
+
+
+--
+-- Name: BITACORA_MEDICA_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "BITACORA_MEDICA"
+    ADD CONSTRAINT "BITACORA_MEDICA_pkey" PRIMARY KEY ("ID_BITACORA_MEDICA");
+
+
+--
+-- Name: EVENTO_pkey; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_pkey" PRIMARY KEY ("ID_EVENTO");
+
+
+--
+-- Name: FACTURA_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "FACTURA"
+    ADD CONSTRAINT "FACTURA_pkey" PRIMARY KEY ("ID_FACTURA");
+
+
+--
+-- Name: GASTO_EVENTO_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "GASTO_EVENTO"
+    ADD CONSTRAINT "GASTO_EVENTO_pkey" PRIMARY KEY ("ID_GASTO_EVENTO");
+
+
+--
+-- Name: ICD_pkey; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "ICD"
+    ADD CONSTRAINT "ICD_pkey" PRIMARY KEY ("ID_ICD");
+
+
+--
+-- Name: IMPLANT_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "IMPLANT"
+    ADD CONSTRAINT "IMPLANT_pkey" PRIMARY KEY ("ID_IMPLANT");
+
+
+--
+-- Name: MEDICO_TRATANTE_pkey; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "MEDICO_TRATANTE"
+    ADD CONSTRAINT "MEDICO_TRATANTE_pkey" PRIMARY KEY ("ID_MEDICO_TRATANTE");
+
+
+--
+-- Name: PK_ESPC_MED_TRAT; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "ESPECIALIDAD_MEDICO_TRATANTE"
+    ADD CONSTRAINT "PK_ESPC_MED_TRAT" PRIMARY KEY ("ID_MEDICO_TRATANTE", "ID_ESPECIALIDAD");
+
+
+--
+-- Name: PK_IMP_HOSP; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "IMPLANT_HOSP"
+    ADD CONSTRAINT "PK_IMP_HOSP" PRIMARY KEY ("ID_IMPLANT", "ID_HOSP");
+
+
+--
+-- Name: PK_L_PR; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "LISTA_PRECIOS"
+    ADD CONSTRAINT "PK_L_PR" PRIMARY KEY ("ID_LISTA_PRECIOS");
+
+
+--
+-- Name: REG_GASTOS_MAYORES_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "REG_GASTOS_MAYORES"
+    ADD CONSTRAINT "REG_GASTOS_MAYORES_pkey" PRIMARY KEY ("ID_REG_GASTOS_MAYORES");
+
+
+--
+-- Name: REG_SEG_PERSONAL_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "REG_SEG_PERSONAL"
+    ADD CONSTRAINT "REG_SEG_PERSONAL_pkey" PRIMARY KEY ("ID_REG_SEG_PERSONAL");
+
+
+--
+-- Name: TIPO_EVENTO_pkey; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "TIPO_EVENTO"
+    ADD CONSTRAINT "TIPO_EVENTO_pkey" PRIMARY KEY ("ID_TIPO_EVENTO");
+
+
+--
+-- Name: TIPO_SEGURO_ID_TIPO_SEGURO_key; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "TIPO_SEGURO"
+    ADD CONSTRAINT "TIPO_SEGURO_ID_TIPO_SEGURO_key" UNIQUE ("ID_TIPO_SEGURO");
+
+
+--
+-- Name: pc_cpt; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "CPT"
+    ADD CONSTRAINT pc_cpt UNIQUE ("ID_CPT");
+
+
+--
+-- Name: pk_antec; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "ANTECEDENTES"
+    ADD CONSTRAINT pk_antec UNIQUE ("ID_ANTECEDENTE");
+
+
+--
+-- Name: pk_cliente; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "CLIENTE"
+    ADD CONSTRAINT pk_cliente UNIQUE ("ID_CLIENTE");
+
+
+--
+-- Name: pk_esp; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "ESPECIALIDAD"
+    ADD CONSTRAINT pk_esp UNIQUE ("ID_ESPECIALIDAD");
+
+
+--
+-- Name: pk_hosp; Type: CONSTRAINT; Schema: public; Owner: smart; Tablespace: 
+--
+
+ALTER TABLE ONLY "HOSPITAL"
+    ADD CONSTRAINT pk_hosp PRIMARY KEY ("ID_HOSP");
+
+
+--
+-- Name: INDEX_FACTURA; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX "INDEX_FACTURA" ON "FACTURA" USING btree ("ID_FACTURA");
+
+
+--
+-- Name: INDE_GASTO; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX "INDE_GASTO" ON "GASTO_EVENTO" USING btree ("ID_GASTO_EVENTO");
+
+
+--
+-- Name: INDX_BIT; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX "INDX_BIT" ON "BITACORA_MEDICA" USING btree ("ID_BITACORA_MEDICA");
+
+
+--
+-- Name: INDX_IMPLANT; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX "INDX_IMPLANT" ON "IMPLANT" USING btree ("ID_IMPLANT");
+
+
+--
+-- Name: INDX_REGGASTMAYORES; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX "INDX_REGGASTMAYORES" ON "REG_GASTOS_MAYORES" USING btree ("ID_REG_GASTOS_MAYORES");
+
+
+--
+-- Name: INDX_REG_SEGPERS; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX "INDX_REG_SEGPERS" ON "REG_SEG_PERSONAL" USING btree ("ID_REG_SEG_PERSONAL");
+
+
+--
+-- Name: indx-evento; Type: INDEX; Schema: public; Owner: smart; Tablespace: 
+--
+
+CREATE INDEX "indx-evento" ON "EVENTO" USING btree ("ID_EVENTO");
+
+
+--
+-- Name: EVENTO_ID_ANTECEDENTES_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_ANTECEDENTES_fkey" FOREIGN KEY ("ID_ANTECEDENTES") REFERENCES "ANTECEDENTES"("ID_ANTECEDENTE");
+
+
+--
+-- Name: EVENTO_ID_CLIENTE_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_CLIENTE_fkey" FOREIGN KEY ("ID_CLIENTE") REFERENCES "CLIENTE"("ID_CLIENTE");
+
+
+--
+-- Name: EVENTO_ID_DIAGN_EGRESO_1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_DIAGN_EGRESO_1_fkey" FOREIGN KEY ("ID_DIAGN_EGRESO_1") REFERENCES "ICD"("ID_ICD");
+
+
+--
+-- Name: EVENTO_ID_DIAGN_INGRESO_1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_DIAGN_INGRESO_1_fkey" FOREIGN KEY ("ID_DIAGN_INGRESO_1") REFERENCES "ICD"("ID_ICD");
+
+
+--
+-- Name: EVENTO_ID_DIAGN_INGRESO_2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_DIAGN_INGRESO_2_fkey" FOREIGN KEY ("ID_DIAGN_INGRESO_2") REFERENCES "ICD"("ID_ICD");
+
+
+--
+-- Name: EVENTO_ID_MEDICO_TRATANTE_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_MEDICO_TRATANTE_fkey" FOREIGN KEY ("ID_MEDICO_TRATANTE") REFERENCES "MEDICO_TRATANTE"("ID_MEDICO_TRATANTE");
+
+
+--
+-- Name: EVENTO_ID_PROCEDIMIENTO_1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_PROCEDIMIENTO_1_fkey" FOREIGN KEY ("ID_PROCEDIMIENTO_1") REFERENCES "CPT"("ID_CPT");
+
+
+--
+-- Name: EVENTO_ID_PROCEDIMIENTO_2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_PROCEDIMIENTO_2_fkey" FOREIGN KEY ("ID_PROCEDIMIENTO_2") REFERENCES "CPT"("ID_CPT");
+
+
+--
+-- Name: EVENTO_ID_TIPO_EVENTO_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_TIPO_EVENTO_fkey" FOREIGN KEY ("ID_TIPO_EVENTO") REFERENCES "TIPO_EVENTO"("ID_TIPO_EVENTO");
+
+
+--
+-- Name: EVENTO_ID_TIPO_SEGURO_fkey; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT "EVENTO_ID_TIPO_SEGURO_fkey" FOREIGN KEY ("ID_TIPO_SEGURO") REFERENCES "TIPO_SEGURO"("ID_TIPO_SEGURO");
+
+
+--
+-- Name: FK-LP-IDC; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "LISTA_PRECIOS"
+    ADD CONSTRAINT "FK-LP-IDC" FOREIGN KEY ("ID_CLIENTE") REFERENCES "CLIENTE"("ID_CLIENTE");
+
+
+--
+-- Name: FK-LP-IDH; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "LISTA_PRECIOS"
+    ADD CONSTRAINT "FK-LP-IDH" FOREIGN KEY ("ID_HOSP") REFERENCES "HOSPITAL"("ID_HOSP");
+
+
+--
+-- Name: FK1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "GASTO_EVENTO"
+    ADD CONSTRAINT "FK1" FOREIGN KEY ("ID_EVENTO") REFERENCES "EVENTO"("ID_EVENTO");
+
+
+--
+-- Name: FK_EVENTO; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "BITACORA_MEDICA"
+    ADD CONSTRAINT "FK_EVENTO" FOREIGN KEY ("ID_EVENTO") REFERENCES "EVENTO"("ID_EVENTO");
+
+
+--
+-- Name: ID_EVNT3_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "REG_SEG_PERSONAL"
+    ADD CONSTRAINT "ID_EVNT3_FK" FOREIGN KEY ("ID_EVENTO") REFERENCES "EVENTO"("ID_EVENTO");
+
+
+--
+-- Name: ID_EVNT4_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "REG_GASTOS_MAYORES"
+    ADD CONSTRAINT "ID_EVNT4_FK" FOREIGN KEY ("ID_EVENTO") REFERENCES "EVENTO"("ID_EVENTO");
+
+
+--
+-- Name: fk_evento_hosp; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT fk_evento_hosp FOREIGN KEY ("ID_HOSP") REFERENCES "HOSPITAL"("ID_HOSP");
+
+
+--
+-- Name: fk_evento_imp; Type: FK CONSTRAINT; Schema: public; Owner: smart
+--
+
+ALTER TABLE ONLY "EVENTO"
+    ADD CONSTRAINT fk_evento_imp FOREIGN KEY ("ID_IMPLANT") REFERENCES "IMPLANT"("ID_IMPLANT");
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- Name: ANTECEDENTES; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "ANTECEDENTES" FROM PUBLIC;
+REVOKE ALL ON TABLE "ANTECEDENTES" FROM smart;
+GRANT ALL ON TABLE "ANTECEDENTES" TO smart;
+GRANT ALL ON TABLE "ANTECEDENTES" TO smart_argal;
+
+
+--
+-- Name: BITACORA_MEDICA; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE "BITACORA_MEDICA" FROM PUBLIC;
+REVOKE ALL ON TABLE "BITACORA_MEDICA" FROM postgres;
+GRANT ALL ON TABLE "BITACORA_MEDICA" TO postgres;
+GRANT ALL ON TABLE "BITACORA_MEDICA" TO smart_argal;
+
+
+--
+-- Name: CLIENTE; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "CLIENTE" FROM PUBLIC;
+REVOKE ALL ON TABLE "CLIENTE" FROM smart;
+GRANT ALL ON TABLE "CLIENTE" TO smart;
+GRANT ALL ON TABLE "CLIENTE" TO smart_argal;
+
+
+--
+-- Name: CPT; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "CPT" FROM PUBLIC;
+REVOKE ALL ON TABLE "CPT" FROM smart;
+GRANT ALL ON TABLE "CPT" TO smart;
+GRANT ALL ON TABLE "CPT" TO smart_argal;
+
+
+--
+-- Name: ESPECIALIDAD; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "ESPECIALIDAD" FROM PUBLIC;
+REVOKE ALL ON TABLE "ESPECIALIDAD" FROM smart;
+GRANT ALL ON TABLE "ESPECIALIDAD" TO smart;
+GRANT ALL ON TABLE "ESPECIALIDAD" TO smart_argal;
+
+
+--
+-- Name: ESPECIALIDAD_MEDICO_TRATANTE; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE "ESPECIALIDAD_MEDICO_TRATANTE" FROM PUBLIC;
+REVOKE ALL ON TABLE "ESPECIALIDAD_MEDICO_TRATANTE" FROM postgres;
+GRANT ALL ON TABLE "ESPECIALIDAD_MEDICO_TRATANTE" TO postgres;
+GRANT ALL ON TABLE "ESPECIALIDAD_MEDICO_TRATANTE" TO smart_argal;
+
+
+--
+-- Name: EVENTO; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "EVENTO" FROM PUBLIC;
+REVOKE ALL ON TABLE "EVENTO" FROM smart;
+GRANT ALL ON TABLE "EVENTO" TO smart;
+GRANT ALL ON TABLE "EVENTO" TO smart_argal;
+
+
+--
+-- Name: FACTURA; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE "FACTURA" FROM PUBLIC;
+REVOKE ALL ON TABLE "FACTURA" FROM postgres;
+GRANT ALL ON TABLE "FACTURA" TO postgres;
+GRANT ALL ON TABLE "FACTURA" TO smart_argal;
+
+
+--
+-- Name: GASTO_EVENTO; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE "GASTO_EVENTO" FROM PUBLIC;
+REVOKE ALL ON TABLE "GASTO_EVENTO" FROM postgres;
+GRANT ALL ON TABLE "GASTO_EVENTO" TO postgres;
+GRANT ALL ON TABLE "GASTO_EVENTO" TO smart_argal;
+
+
+--
+-- Name: HOSPITAL; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "HOSPITAL" FROM PUBLIC;
+REVOKE ALL ON TABLE "HOSPITAL" FROM smart;
+GRANT ALL ON TABLE "HOSPITAL" TO smart;
+GRANT ALL ON TABLE "HOSPITAL" TO smart_argal;
+
+
+--
+-- Name: ICD; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "ICD" FROM PUBLIC;
+REVOKE ALL ON TABLE "ICD" FROM smart;
+GRANT ALL ON TABLE "ICD" TO smart;
+GRANT ALL ON TABLE "ICD" TO smart_argal;
+
+
+--
+-- Name: IMPLANT; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE "IMPLANT" FROM PUBLIC;
+REVOKE ALL ON TABLE "IMPLANT" FROM postgres;
+GRANT ALL ON TABLE "IMPLANT" TO postgres;
+GRANT ALL ON TABLE "IMPLANT" TO smart_argal;
+
+
+--
+-- Name: IMPLANT_HOSP; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE "IMPLANT_HOSP" FROM PUBLIC;
+REVOKE ALL ON TABLE "IMPLANT_HOSP" FROM postgres;
+GRANT ALL ON TABLE "IMPLANT_HOSP" TO postgres;
+GRANT ALL ON TABLE "IMPLANT_HOSP" TO smart_argal;
+
+
+--
+-- Name: MEDICO_TRATANTE; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "MEDICO_TRATANTE" FROM PUBLIC;
+REVOKE ALL ON TABLE "MEDICO_TRATANTE" FROM smart;
+GRANT ALL ON TABLE "MEDICO_TRATANTE" TO smart;
+GRANT ALL ON TABLE "MEDICO_TRATANTE" TO smart_argal;
+
+
+--
+-- Name: REG_GASTOS_MAYORES; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE "REG_GASTOS_MAYORES" FROM PUBLIC;
+REVOKE ALL ON TABLE "REG_GASTOS_MAYORES" FROM postgres;
+GRANT ALL ON TABLE "REG_GASTOS_MAYORES" TO postgres;
+GRANT ALL ON TABLE "REG_GASTOS_MAYORES" TO smart_argal;
+
+
+--
+-- Name: REG_SEG_PERSONAL; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE "REG_SEG_PERSONAL" FROM PUBLIC;
+REVOKE ALL ON TABLE "REG_SEG_PERSONAL" FROM postgres;
+GRANT ALL ON TABLE "REG_SEG_PERSONAL" TO postgres;
+GRANT ALL ON TABLE "REG_SEG_PERSONAL" TO smart_argal;
+
+
+--
+-- Name: TIPO_EVENTO; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "TIPO_EVENTO" FROM PUBLIC;
+REVOKE ALL ON TABLE "TIPO_EVENTO" FROM smart;
+GRANT ALL ON TABLE "TIPO_EVENTO" TO smart;
+GRANT ALL ON TABLE "TIPO_EVENTO" TO smart_argal;
+
+
+--
+-- Name: TIPO_SEGURO; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE "TIPO_SEGURO" FROM PUBLIC;
+REVOKE ALL ON TABLE "TIPO_SEGURO" FROM smart;
+GRANT ALL ON TABLE "TIPO_SEGURO" TO smart;
+GRANT ALL ON TABLE "TIPO_SEGURO" TO smart_argal;
+
+
+--
+-- Name: test; Type: ACL; Schema: public; Owner: smart
+--
+
+REVOKE ALL ON TABLE test FROM PUBLIC;
+REVOKE ALL ON TABLE test FROM smart;
+GRANT ALL ON TABLE test TO smart;
+GRANT ALL ON TABLE test TO smart_argal;
+
+
+--
+-- PostgreSQL database dump complete
+--
