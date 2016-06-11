@@ -3,10 +3,13 @@
 		<img src="static/img/v2.0/img/logo_argal.png" width="80" height="50" />		
 	</li>	
 	<li>Bienvenido:<%=request.getSession().getAttribute("userSession")%><br><a style="color: #ffffff;" class="logout" href="logout">Cerrar sesión</a></li>
-	<li><a href="#"><img src="static/img/v2.0/img/evento.png" width="30" height="30" />Evento</a>
+		<li><a href="#"><img src="static/img/v2.0/img/versusicon1.png" width="30" height="30" />Versus</a>
 		<ul>
-			<li><a href="#" onclick="loadPage(1);">Registrar</a></li>				
-		</ul></li>
+		<li><a href="#" onclick="loadPage(1);">Realizar Versus</a>
+		</li>				
+		<li><a href="#" onclick="loadPage(1);">Historial</a>
+		</li>
+	</ul></li>
 	<%if (Integer.parseInt(""+request.getSession().getAttribute("tipoUsuarioLogin"))==3){%>
 	<li>
 		<a href="#"><img src="static/img/v2.0/img/catalogo.png" width="30" height="30" />Catálogos</a>

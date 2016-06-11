@@ -37,7 +37,7 @@
 		<div id="wrappermiddle">
 			<center>
 				<h4>HOSPITAL SYSTEM CONTROL SPENDING</h4>
-				<img src="static/img/v2.0/img/logo_argal.png" width="100" height="60" />
+				<img src="static/img/v2.0/img/logoVersus.png" width="100" height="60" />
 				${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 			</center>
 			<form name="loginform" action="j_spring_security_check" method="post">			

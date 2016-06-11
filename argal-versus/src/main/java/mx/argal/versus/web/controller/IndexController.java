@@ -84,7 +84,7 @@ public class IndexController {
     		System.out.println("ID DEL IMPLANT:"+implant.getIdImplant());
 			request.getSession().setAttribute("idImplantLogin",implant.getIdImplant());    			
 			request.getSession().setAttribute("tipoUsuarioLogin",3);
-    		return new ModelAndView("v2.0/eventos/eventos", "usuario", usuario);
+    		return new ModelAndView("v2.0/versus/versus", "usuario", usuario);
     	}
     	if ( rol.equals(ROLE_IMPLANT)) {
     		Implant implant=new Implant();
